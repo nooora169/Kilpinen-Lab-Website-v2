@@ -1,0 +1,6 @@
+---
+const {methods=[],questions=[],collaborators=[],resources=[]}=Astro.props;
+const groups=[['Methods',methods],['Research questions',questions],['Collaborators',collaborators]].map(([name,items])=>({name,items:items.filter(x=>x.trim())})).filter(g=>g.items.length);
+const links=resources.filter(r=>r.name?.trim());
+---
+{(groups.length>0||links.length>0)&&<div class="detail-columns detail-section">{groups.map(g=><section><h2>{g.name}</h2><ul>{g.items.map(x=><li>{x}</li>)}</ul></section>)}{links.length>0&&<section><h2>Documents and datasets</h2><ul>{links.map(r=><li>{r.url?<a href={r.url}>{r.name} ↗</a>:r.name}</li>)}</ul></section>}</div>}

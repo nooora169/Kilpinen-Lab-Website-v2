@@ -1,0 +1,26 @@
+---
+import '../styles/global.css';
+import site from '../data/site.json';
+import { getCollection } from 'astro:content';
+interface Props {title?: string; description?: string;}
+const {title,description}=Astro.props;
+const pageTitle=title ? `${title} · ${site.name}` : `${site.name} · ${site.tagline}`;
+const extra=(await getCollection('pages',({data})=>!data.draft&&!!data.navLabel)).sort((a,b)=>a.data.navOrder-b.data.navOrder);
+const links=[['Home','/'],['Research','/research/'],['People','/people/'],['Publications','/publications/'],['Resources','/resources/'],['Lab life','/lab-life/'],['News','/news/'],...extra.map(p=>[p.data.navLabel,`/${p.id}/`])];
+const active=(href)=>href==='/'?Astro.url.pathname==='/':Astro.url.pathname.startsWith(href)||(href==='/research/'&&Astro.url.pathname.startsWith('/projects/'));
+
+---
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><title>{pageTitle}</title><meta name="description" content={description??site.lede}/><meta property="og:title" content={pageTitle}/><meta property="og:description" content={description??site.lede}/><meta property="og:type" content="website"/><link rel="icon" href="/images/kilpinen-lab-logo.png" type="image/png"/></head>
+<body><a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="wrap nav-in"><a class="brand" href="/" aria-label="Kilpinen Lab home"><span class="lab-symbol"><img src="/images/kilpinen-lab-logo.png" width="1024" height="1024" alt=""/></span><span><span class="wordmark">Kilpinen Lab</span><span class="brand-sub">CELLULAR GENETICS OF DISEASE</span></span></a><button class="menu-toggle" aria-expanded="false" aria-controls="navigation">Menu <span aria-hidden="true">＋</span></button><nav id="navigation" aria-label="Main navigation">{links.map(([name,href])=><a href={href} aria-current={active(href)?'page':undefined}>{name}</a>)}<a class="nav-contact" href="/contact/">Contact ↗</a></nav></div></header>
+<main id="main"><slot/></main>
+<footer class="site-footer"><div class="wrap footer-grid"><div><a class="wordmark" href="/">Kilpinen Lab</a><p>Cellular genetics of disease<br/>University of Helsinki · Finland</p></div><div><span class="eyebrow">Part of</span><p>Institute for Molecular Medicine Finland<br/>Helsinki Institute of Life Science<br/>Neuroscience Center · Faculty of Medicine</p></div><div><span class="eyebrow">Stay connected</span><p><a href="/contact/">Contact the group ↗</a><br/><a href="https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease">University of Helsinki ↗</a></p></div></div><div class="wrap footer-bottom"><span>© {new Date().getFullYear()} Kilpinen Lab</span><span>Helsinki, Finland</span></div></footer>
+<script>
+const toggle=document.querySelector<HTMLButtonElement>('.menu-toggle');
+const nav=document.querySelector<HTMLElement>('#navigation');
+function closeMenu(){toggle?.setAttribute('aria-expanded','false');nav?.classList.remove('open');}
+toggle?.addEventListener('click',()=>{const open=toggle.getAttribute('aria-expanded')!=='true';toggle.setAttribute('aria-expanded',String(open));nav?.classList.toggle('open',open);});
+nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',closeMenu));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&toggle?.getAttribute('aria-expanded')==='true'){closeMenu();toggle.focus();}});
+</script></body></html>

@@ -1,0 +1,24 @@
+---
+interface Props {
+  publications: any[];
+}
+const { publications } = Astro.props;
+---
+
+<ul class="pubs">
+  {publications.map((p) => (
+    <li>
+      <span class="yr">{p.year}</span>
+      <p class="cite">
+        <span class="a">{p.authors}</span>{' '}
+        <span class="t">{p.title}</span>. <span class="j">{p.journal}{p.journal==='bioRxiv' ? ' · Preprint (not peer reviewed)' : ''}</span>.
+        {p.doi && (
+          <>
+            {' '}
+            <a href={`https://doi.org/${p.doi}`} rel="noopener">{p.doi}</a>
+          </>
+        )}
+      </p>
+    </li>
+  ))}
+</ul>

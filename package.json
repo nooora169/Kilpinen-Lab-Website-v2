@@ -1,0 +1,17 @@
+{
+  "name": "kilpinen-lab-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "publications": "node scripts/fetch-publications.mjs",
+    "editor": "npx --yes decap-server@3.3.1"
+  },
+  "dependencies": {
+    "astro": "^5.14.1"
+  }
+}

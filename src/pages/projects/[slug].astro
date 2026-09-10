@@ -1,0 +1,18 @@
+---
+import Base from '../../layouts/Base.astro';
+import DetailFields from '../../components/DetailFields.astro';
+import DetailMedia from '../../components/DetailMedia.astro';
+import PersonCard from '../../components/PersonCard.astro';
+import PubList from '../../components/PubList.astro';
+import {getCollection,render} from 'astro:content';
+import publications from '../../data/publications.json';
+export async function getStaticPaths(){return (await getCollection('projects',({data})=>!data.draft)).map(project=>({params:{slug:project.id},props:{project}}));}
+const {project}=Astro.props;const d=project.data;const {Content}=await render(project);
+const topics=(await getCollection('topics',({data})=>!data.draft)).filter(t=>d.topics.includes(t.id));
+const people=(await getCollection('people')).filter(p=>d.people.includes(p.id));
+const images=d.figures.filter(f=>f.image?.trim());
+const linkedDois=[...d.dois,...topics.flatMap(t=>t.data.dois)];
+const papers=publications.filter(p=>linkedDois.some(doi=>doi.toLowerCase()===p.doi?.toLowerCase()));
+---
+<Base title={d.title} description={d.summary}><div class="band deep"><div class="wrap"><a href="/research/#projects">← All projects</a><p class="eyebrow">{d.status} / Project</p><h1 class="disp">{d.title}</h1><p class="intro">{d.summary}</p></div></div><div class="band"><div class="wrap"><DetailMedia figures={images.slice(0,1)} showFunders={false} showHeading={false}/><div class="prose"><Content/></div><DetailMedia figures={images.slice(1)} funders={d.funders} funding={d.funding}/><DetailFields methods={d.methods} questions={d.questions} collaborators={d.collaborators} resources={d.resources}/>{topics.length>0&&<section><h2>Related research</h2><div class="links">{topics.map(t=><a class="btn" href={`/research/${t.id}/`}>{t.data.shortName} ↗</a>)}</div></section>}{people.length>0&&<section><h2>Project team</h2><div class="people">{people.map(person=><PersonCard person={person}/>)}</div></section>}{papers.length>0&&<section><h2>Related publications</h2><PubList publications={papers}/></section>}<section><h2>Interested in this work?</h2><a class="btn solid" href="/contact/">Contact the group ↗</a></section></div></div></Base>
+<style>h1{font-size:clamp(2.4rem,5vw,4rem);max-width:24ch;margin:1.5rem 0}section{margin-top:3rem}.links{display:flex;gap:1rem;flex-wrap:wrap}</style>

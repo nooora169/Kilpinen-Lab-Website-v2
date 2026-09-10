@@ -1,0 +1,50 @@
+---
+/**
+ * Every markdown file in src/content/pages/ becomes a page here.
+ * Drop in src/content/pages/teaching.md and it appears at /teaching/.
+ * Give it a navLabel in the frontmatter and it appears in the top nav too.
+ */
+import Base from '../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const pages = await getCollection('pages', ({ data }) => !data.draft);
+  return pages.map((page) => ({ params: { slug: page.id }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page);
+---
+
+<Base title={page.data.title} description={page.data.intro}>
+  <div class="band">
+    <div class="wrap">
+      <header class="p-head">
+        <h1 class="disp">{page.data.title}</h1>
+        {page.data.intro && <p class="lede">{page.data.intro}</p>}
+      </header>
+      <div class="prose">
+        <Content />
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .p-head {
+    padding: 2rem 0 2.5rem;
+    display: grid;
+    gap: 1rem;
+  }
+  .p-head h1 {
+    font-size: var(--s-3);
+    margin: 0;
+    max-width: 20ch;
+  }
+  .lede {
+    margin: 0;
+    font-size: var(--s-1);
+    color: var(--ink-2);
+    max-width: 54ch;
+  }
+</style>

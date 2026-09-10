@@ -1,0 +1,9 @@
+---
+import {getCollection} from 'astro:content';
+const {limit}=Astro.props;
+const all=(await getCollection('news',({data})=>!data.draft&&data.date<=new Date())).sort((a,b)=>b.data.date.getTime()-a.data.date.getTime());
+const items=limit?all.slice(0,limit):all;
+const dateLabel=(date)=>new Intl.DateTimeFormat('en-GB',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(date);
+---
+{items.length?<div class="news-grid">{items.map(item=><article class="news-card">{item.data.image&&<a href={`/news/${item.id}/`} tabindex="-1" aria-hidden="true"><img src={item.data.image} alt="" loading="lazy" width="720" height="480"/></a>}<div class="news-body"><time datetime={item.data.date.toISOString().slice(0,10)}>{dateLabel(item.data.date)}</time><h3><a href={`/news/${item.id}/`}>{item.data.title}</a></h3><p>{item.data.summary}</p><a class="read" href={`/news/${item.id}/`}>Read more ↗</a></div></article>)}</div>:<p class="empty-note">News from the lab will appear here.</p>}
+<style>.news-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem}.news-card{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-top:3px solid var(--cyan);border-radius:.5rem;overflow:hidden}.news-card img{display:block;width:100%;height:auto;aspect-ratio:3/2;object-fit:cover}.news-body{display:flex;flex-direction:column;gap:1rem;padding:1.5rem;flex:1}.news-body time{font:.875rem var(--f-mono);color:var(--muted)}.news-body h3{font-size:1.4rem;line-height:1.35;margin:0}.news-body h3 a{text-decoration:none}.news-body h3 a:hover{text-decoration:underline}.news-body p{color:var(--ink-2);margin:0}.read{margin-top:auto;padding-top:.75rem;color:var(--cyan)}@media(max-width:900px){.news-grid{grid-template-columns:1fr}}</style>

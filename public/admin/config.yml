@@ -1,0 +1,792 @@
+# Hosted editing still requires repository and OAuth setup; see README.
+backend:
+  name: github
+  repo: YOUR_GITHUB_ORG/YOUR_REPOSITORY
+  branch: main
+local_backend: true
+media_folder: public/uploads
+public_folder: /uploads
+publish_mode: simple
+collections:
+- name: topics
+  label: Research topics
+  label_singular: Research topic
+  folder: src/content/topics
+  create: true
+  slug: '{{slug}}'
+  identifier_field: shortName
+  summary: '{{shortName}}'
+  sortable_fields:
+  - order
+  - shortName
+  fields:
+  - name: figures
+    label: Images and figures
+    widget: list
+    required: false
+    fields:
+    - name: image
+      label: Image
+      widget: image
+      required: false
+    - name: caption
+      label: Caption
+      widget: string
+    - name: alt
+      label: Image description for accessibility
+      widget: string
+      required: false
+    - name: credit
+      label: Credit
+      widget: string
+      required: false
+  - name: funders
+    label: Funder logos
+    widget: list
+    required: false
+    fields:
+    - name: name
+      label: Funder name
+      widget: string
+    - name: logo
+      label: Logo
+      widget: image
+      required: false
+    - name: url
+      label: Website
+      widget: string
+      required: false
+  - name: methods
+    label: Methods
+    widget: list
+    required: false
+    field:
+      name: item
+      widget: string
+  - name: questions
+    label: Research questions
+    widget: list
+    required: false
+    field:
+      name: item
+      widget: string
+  - name: shortName
+    label: Short bubble label
+    widget: string
+  - name: title
+    label: Full title
+    widget: string
+  - name: hook
+    label: Brief description
+    widget: string
+  - name: summary
+    label: Summary
+    widget: text
+  - name: colour
+    label: Colour
+    widget: select
+    options:
+    - gfp
+    - dapi
+    - mcherry
+    - farred
+    - amber
+    - cyan
+    - slate
+    - chalk
+    default: cyan
+  - name: status
+    label: Status
+    widget: select
+    options:
+    - Active
+    - Recruiting
+    - Wrapping up
+    - Open source
+    default: Active
+  - name: since
+    label: Running since (year)
+    widget: string
+    required: false
+  - name: people
+    label: People on this topic
+    widget: relation
+    collection: people
+    search_fields:
+    - name
+    value_field: '{{slug}}'
+    display_fields:
+    - name
+    multiple: true
+    required: false
+  - name: dois
+    label: Key paper DOIs (just the DOI, nothing else)
+    widget: list
+    field:
+      name: doi
+      label: DOI
+      widget: string
+    required: false
+  - name: funding
+    label: Funding
+    widget: list
+    field:
+      name: item
+      label: Funder and grant number
+      widget: string
+    required: false
+  - name: collaborators
+    label: Collaborators outside the group
+    widget: list
+    field:
+      name: item
+      label: Name and institution
+      widget: string
+    required: false
+  - name: datasets
+    label: Datasets and resources
+    widget: list
+    required: false
+    fields:
+    - name: name
+      label: Name
+      widget: string
+    - name: url
+      label: Link
+      widget: string
+      required: false
+  - name: order
+    label: Sort order
+    widget: number
+    value_type: int
+    default: 50
+  - name: draft
+    label: Hide from the site
+    widget: boolean
+    default: false
+  - name: body
+    label: Full page content (headings, paragraphs, images, links)
+    widget: markdown
+    required: false
+- name: people
+  label: People
+  label_singular: Person
+  folder: src/content/people
+  create: true
+  slug: '{{slug}}'
+  identifier_field: name
+  summary: '{{name}} / {{role}}'
+  sortable_fields:
+  - order
+  - name
+  fields:
+  - name: figures
+    label: Images and figures
+    widget: list
+    required: false
+    fields:
+    - name: image
+      label: Image
+      widget: image
+      required: false
+    - name: caption
+      label: Caption
+      widget: string
+    - name: alt
+      label: Image description for accessibility
+      widget: string
+      required: false
+    - name: credit
+      label: Credit
+      widget: string
+      required: false
+  - name: funders
+    label: Funder logos
+    widget: list
+    required: false
+    fields:
+    - name: name
+      label: Funder name
+      widget: string
+    - name: logo
+      label: Logo
+      widget: image
+      required: false
+    - name: url
+      label: Website
+      widget: string
+      required: false
+  - name: methods
+    label: Methods
+    widget: list
+    required: false
+    field:
+      name: item
+      widget: string
+  - name: questions
+    label: Research questions
+    widget: list
+    required: false
+    field:
+      name: item
+      widget: string
+  - name: name
+    label: Full name as it should be displayed
+    widget: string
+  - name: role
+    label: Role and title
+    widget: string
+  - name: focus
+    label: Research summary
+    widget: text
+  - name: orcid
+    label: ORCID iD
+    widget: string
+    required: false
+    hint: Needed for the publication feed
+  - name: email
+    label: Email to display
+    widget: string
+    required: false
+  - name: photo
+    label: Portrait
+    widget: image
+    required: false
+    hint: At least 1000 px wide. Leave empty to show initials.
+  - name: links
+    label: Links
+    widget: list
+    required: false
+    fields:
+    - name: label
+      label: Link label
+      widget: string
+    - name: url
+      label: URL
+      widget: string
+  - name: colour
+    label: Colour
+    widget: select
+    options:
+    - gfp
+    - dapi
+    - mcherry
+    - farred
+    - amber
+    - cyan
+    - slate
+    - chalk
+    default: chalk
+  - name: order
+    label: Display order
+    widget: number
+    value_type: int
+    default: 50
+  - name: alumnus
+    label: Former member
+    widget: boolean
+    default: false
+  - name: leftIn
+    label: Year they left
+    widget: string
+    required: false
+  - name: nowAt
+    label: Where they are now
+    widget: string
+    required: false
+  - name: sourceUrl
+    label: Published profile URL
+    widget: string
+    required: false
+  - name: interests
+    label: Interests
+    widget: list
+    required: false
+    field:
+      name: item
+      widget: string
+  - name: body
+    label: Full biography
+    widget: markdown
+    required: false
+- name: tools
+  label: Tools
+  label_singular: Tool
+  folder: src/content/tools
+  create: true
+  slug: '{{slug}}'
+  identifier_field: name
+  summary: '{{name}}'
+  fields:
+  - name: name
+    label: Name
+    widget: string
+  - name: summary
+    label: What it does
+    widget: text
+  - name: language
+    label: Language
+    widget: string
+    required: false
+  - name: repo
+    label: Repository URL
+    widget: string
+  - name: docs
+    label: Documentation URL
+    widget: string
+    required: false
+  - name: doi
+    label: Paper DOI
+    widget: string
+    required: false
+  - name: colour
+    label: Colour
+    widget: select
+    options:
+    - gfp
+    - dapi
+    - mcherry
+    - farred
+    - amber
+    - cyan
+    - slate
+    - chalk
+    default: cyan
+  - name: order
+    label: Sort order
+    widget: number
+    value_type: int
+    default: 50
+- name: gallery
+  label: Life in the lab
+  label_singular: Photo
+  folder: src/content/gallery
+  create: true
+  slug: '{{slug}}'
+  identifier_field: caption
+  summary: '{{caption}}'
+  fields:
+  - name: caption
+    label: Caption
+    widget: string
+  - name: photo
+    label: Photo
+    widget: image
+    required: false
+  - name: credit
+    label: Photo credit
+    widget: string
+    required: false
+  - name: date
+    label: Date
+    widget: string
+    required: false
+  - name: alt
+    label: Image description for accessibility
+    widget: string
+    required: false
+  - name: layout
+    label: Photo shape
+    widget: select
+    options: [landscape, portrait]
+    default: landscape
+  - name: position
+    label: Crop focus
+    widget: string
+    default: 50% 50%
+    hint: Use 50% 25% to keep faces near the top in view
+  - name: wide
+    label: Wide photo (two columns)
+    widget: boolean
+    default: false
+  - name: order
+    label: Sort order
+    widget: number
+    value_type: int
+    default: 50
+- name: pages
+  label: Other pages
+  label_singular: Page
+  folder: src/content/pages
+  create: true
+  slug: '{{slug}}'
+  identifier_field: title
+  summary: '{{title}}'
+  fields:
+  - name: title
+    label: Page title
+    widget: string
+  - name: intro
+    label: Intro line
+    widget: text
+    required: false
+  - name: navLabel
+    label: Show in the top menu as
+    widget: string
+    required: false
+  - name: navOrder
+    label: Menu order
+    widget: number
+    value_type: int
+    default: 50
+  - name: draft
+    label: Hide from the site
+    widget: boolean
+    default: false
+  - name: body
+    label: Content
+    widget: markdown
+- name: settings
+  label: Site settings
+  files:
+  - name: site
+    label: Homepage text and contact details
+    file: src/data/site.json
+    fields:
+    - name: name
+      label: Lab name
+      widget: string
+    - name: tagline
+      label: Tagline
+      widget: string
+    - name: headline
+      label: Homepage headline
+      widget: string
+    - name: headlineHighlight
+      label: Part of the headline to colour
+      widget: string
+    - name: kicker
+      label: Line above the headline
+      widget: string
+    - name: lede
+      label: Opening paragraph
+      widget: text
+    - name: affiliations
+      label: Affiliation chips
+      widget: list
+      field:
+        name: item
+        label: Affiliation
+        widget: string
+    - name: contact
+      label: Contact
+      widget: object
+      fields:
+      - name: piName
+        label: PI name
+        widget: string
+      - name: email
+        label: Email
+        widget: string
+      - name: address
+        label: Address lines
+        widget: list
+        field:
+          name: line
+          label: Line
+          widget: string
+      - name: switchboard
+        label: Switchboard
+        widget: string
+    - name: prototypeBanner
+      label: Legacy prototype banner (unused)
+      widget: boolean
+      default: true
+      hint: Turn this off on launch day.
+- name: projects
+  label: Projects
+  folder: src/content/projects
+  create: true
+  slug: '{{slug}}'
+  identifier_field: title
+  fields:
+  - name: figures
+    label: Images and figures
+    widget: list
+    required: false
+    fields:
+    - name: image
+      label: Image
+      widget: image
+      required: false
+    - name: caption
+      label: Caption
+      widget: string
+    - name: alt
+      label: Image description for accessibility
+      widget: string
+      required: false
+    - name: credit
+      label: Credit
+      widget: string
+      required: false
+  - name: funders
+    label: Funder logos
+    widget: list
+    required: false
+    fields:
+    - name: name
+      label: Funder name
+      widget: string
+    - name: logo
+      label: Logo
+      widget: image
+      required: false
+    - name: url
+      label: Website
+      widget: string
+      required: false
+  - name: methods
+    label: Methods
+    widget: list
+    required: false
+    field:
+      name: item
+      widget: string
+  - name: questions
+    label: Research questions
+    widget: list
+    required: false
+    field:
+      name: item
+      widget: string
+  - name: title
+    label: Title
+    widget: string
+  - name: summary
+    label: Summary
+    widget: text
+  - name: colour
+    label: Colour
+    widget: select
+    options:
+    - gfp
+    - dapi
+    - mcherry
+    - farred
+    - amber
+    - cyan
+    - slate
+    - chalk
+    default: cyan
+  - name: status
+    label: Status
+    widget: select
+    options:
+    - Active
+    - Completed
+    - Recruiting
+    default: Active
+  - name: topics
+    label: Related topics
+    widget: relation
+    collection: topics
+    search_fields:
+    - title
+    value_field: '{{slug}}'
+    display_fields:
+    - title
+    multiple: true
+    required: false
+  - name: people
+    label: Project team
+    widget: relation
+    collection: people
+    search_fields:
+    - name
+    value_field: '{{slug}}'
+    display_fields:
+    - name
+    multiple: true
+    required: false
+  - name: dois
+    label: Publication DOIs
+    widget: list
+    required: false
+    field:
+      name: doi
+      widget: string
+  - name: funding
+    label: Funding
+    widget: list
+    required: false
+    field:
+      name: item
+      widget: string
+  - name: collaborators
+    label: Collaborators
+    widget: list
+    required: false
+    field:
+      name: item
+      widget: string
+  - name: resources
+    label: Resources and documents
+    widget: list
+    required: false
+    fields:
+    - name: name
+      label: Name
+      widget: string
+    - name: url
+      label: URL
+      widget: string
+  - name: order
+    label: Display order
+    widget: number
+    default: 50
+  - name: draft
+    label: Hide from site
+    widget: boolean
+    default: false
+  - name: body
+    label: Full description
+    widget: markdown
+    required: false
+- name: publications
+  label: Publications
+  files:
+  - name: publications
+    label: Selected publications
+    file: src/data/publications.json
+    fields:
+    - name: publications
+      label: Publications
+      widget: list
+      root: true
+      fields:
+      - name: year
+        label: Year
+        widget: number
+      - name: title
+        label: Title
+        widget: string
+      - name: authors
+        label: Authors
+        widget: string
+      - name: journal
+        label: Journal (bioRxiv for preprints)
+        widget: string
+      - name: doi
+        label: DOI
+        widget: string
+      - name: summary
+        label: Optional result summary
+        widget: text
+        required: false
+- name: news
+  label: News
+  label_singular: News item
+  folder: src/content/news
+  create: true
+  slug: '{{slug}}'
+  summary: '{{title}} · {{date}}'
+  sortable_fields:
+  - date
+  - title
+  fields:
+  - name: title
+    label: Title
+    widget: string
+  - name: date
+    label: Date
+    widget: datetime
+    date_format: YYYY-MM-DD
+    time_format: false
+    format: YYYY-MM-DD
+  - name: summary
+    label: Short description
+    widget: text
+  - name: image
+    label: Image
+    widget: image
+    required: false
+  - name: imageAlt
+    label: Image description
+    widget: string
+    required: false
+  - name: imageCredit
+    label: Image credit
+    widget: string
+    required: false
+  - name: topics
+    label: Related research topics
+    widget: relation
+    collection: topics
+    search_fields:
+    - title
+    value_field: '{{slug}}'
+    display_fields:
+    - title
+    multiple: true
+    required: false
+  - name: projects
+    label: Related projects
+    widget: relation
+    collection: projects
+    search_fields:
+    - title
+    value_field: '{{slug}}'
+    display_fields:
+    - title
+    multiple: true
+    required: false
+  - name: people
+    label: Related people
+    widget: relation
+    collection: people
+    search_fields:
+    - name
+    value_field: '{{slug}}'
+    display_fields:
+    - name
+    multiple: true
+    required: false
+  - name: dois
+    label: Publication DOIs
+    widget: list
+    required: false
+    field:
+      name: doi
+      widget: string
+  - name: draft
+    label: Hide from site
+    widget: boolean
+    default: true
+  - name: body
+    label: Full announcement
+    widget: markdown
+    required: false
+- name: funding
+  label: Homepage funders
+  files:
+  - name: funders
+    label: Funder logos
+    file: src/data/funders.json
+    fields:
+    - name: heading
+      label: Section heading
+      widget: string
+    - name: funders
+      label: Funders
+      widget: list
+      fields:
+      - name: name
+        label: Funder name
+        widget: string
+      - name: logo
+        label: Logo
+        widget: image
+        hint: Upload an individual logo to replace one from the original banner.
+      - name: url
+        label: Website link
+        widget: string
+        required: false
+      - name: cropLeft
+        widget: hidden
+        default: 0
+        required: false
+      - name: cropWidth
+        widget: hidden
+        default: 0
+        required: false

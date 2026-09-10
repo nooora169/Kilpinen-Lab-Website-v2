@@ -1,0 +1,54 @@
+---
+interface Props {
+  person: any;
+  seed?: number;
+}
+const { person, seed = 1 } = Astro.props;
+const d = person.data;
+
+const HEX: Record<string, string> = {
+  gfp: '#4FE0A0',
+  dapi: '#84A9FF',
+  mcherry: '#FF74A8',
+  farred: '#C39CFF',
+  amber: '#FFB472',
+  cyan: '#4FE0D8',
+  slate: '#A0C2D2',
+  chalk: '#D3E0E0',
+};
+
+const initials = d.name
+  .split(' ')
+  .filter(Boolean)
+  .map((w: string) => w[0])
+  .slice(0, 2)
+  .join('');
+---
+
+<article class="person" style={`--c: var(--${d.colour})`}>
+  <div class="av">
+    {d.photo ? (
+      <img src={d.photo} alt={d.name} loading="lazy" width="320" height="320" />
+    ) : (
+      <>
+        
+        <span class="ini" aria-hidden="true">{initials}</span>
+      </>
+    )}
+  </div>
+  <div class="meta">
+    <a class="p-name" href={`/people/${person.id}/`}>{d.name} ↗</a>
+    <span class="p-role">{d.role}</span>
+    <span class="p-focus">{d.focus}</span>
+    {(d.links.length > 0 || d.orcid || d.email) && (
+      <span class="p-links">
+        {d.email && <a href={`mailto:${d.email}`}>email</a>}
+        {d.orcid && <a href={`https://orcid.org/${d.orcid}`} rel="noopener">ORCID</a>}
+        {d.links.map((l: any) => (
+          <a href={l.url} rel="noopener">{l.label}</a>
+        ))}
+      </span>
+    )}
+    {d.alumnus && d.nowAt && <span class="p-focus">Now at {d.nowAt}</span>}
+  </div>
+</article>

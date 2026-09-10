@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.astro/
+.DS_Store
+.env
+.env.production
+npm-debug.log*
+
+src/data/publications.import.json
+.env.*
+!.env.example

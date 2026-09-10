@@ -1,0 +1,109 @@
+[
+  {
+    "year": 2026,
+    "authors": "Jalkanen N, Trontti K, Norppa AJ, et al.",
+    "title": "INTS6 loss of function disrupts transcriptional regulation in mild intellectual disability",
+    "journal": "bioRxiv",
+    "doi": "10.64898/2026.07.17.737701",
+    "summary": "Investigating the consequences of INTS6 loss of function in intellectual disability.",
+    "sourceUrl": "https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease/publications"
+  },
+  {
+    "year": 2026,
+    "authors": "Budinger D, Puigdevall P, Hall GT, et al.",
+    "title": "An in vivo and in vitro spatiotemporal profile of human midbrain development",
+    "journal": "Nature Communications",
+    "doi": "10.1038/s41467-025-67779-1",
+    "summary": "Profiling human midbrain development across in vivo and in vitro systems.",
+    "sourceUrl": "https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease/publications"
+  },
+  {
+    "year": 2025,
+    "authors": "Sundaresh A, Meistermann D, Lampela R, et al.",
+    "title": "Joint profiling of cell morphology and gene expression during in vitro neurodevelopment",
+    "journal": "eLife",
+    "doi": "10.7554/eLife.102578",
+    "summary": "Connecting morphological profiles with gene expression during neuronal differentiation.",
+    "sourceUrl": "https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease/publications"
+  },
+  {
+    "year": 2023,
+    "authors": "Puigdevall P, Jerber J, Danecek P, Castellano S, Kilpinen H.",
+    "title": "Effects of somatic mutations on cellular differentiation in iPSC models of neurodevelopment",
+    "journal": "Cell Genomics",
+    "doi": "10.1016/j.xgen.2023.100280",
+    "sourceUrl": "https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease/publications"
+  },
+  {
+    "year": 2023,
+    "authors": "Gynter A, Meistermann D, Lähdesmäki H, Kilpinen H.",
+    "title": "DeconV: probabilistic cell type deconvolution from bulk RNA-sequencing data",
+    "journal": "bioRxiv",
+    "doi": "10.1101/2023.12.07.570524",
+    "sourceUrl": "https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease/publications"
+  },
+  {
+    "year": 2022,
+    "authors": "Saukkonen A, Kilpinen H, Hodgkinson A.",
+    "title": "Highly accurate quantification of allelic gene expression for population and disease genetics",
+    "journal": "Genome Research",
+    "doi": "10.1101/gr.276296.121",
+    "sourceUrl": "https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease/publications"
+  },
+  {
+    "year": 2021,
+    "authors": "Bonder MJ, Smail C, Gloudemans MJ, et al.",
+    "title": "Identification of rare and common regulatory variants in pluripotent cells using population-scale transcriptomics",
+    "journal": "Nature Genetics",
+    "doi": "10.1038/s41588-021-00800-7",
+    "sourceUrl": "https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease/publications"
+  },
+  {
+    "year": 2020,
+    "authors": "Mirauta BA, Seaton DD, Bensaddek D, et al.",
+    "title": "Population-scale proteome variation in human induced pluripotent stem cells",
+    "journal": "eLife",
+    "doi": "10.7554/eLife.57390",
+    "sourceUrl": "https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease/publications"
+  },
+  {
+    "year": 2018,
+    "authors": "Schwartzentruber J, Foskolou S, Kilpinen H, et al.",
+    "title": "Molecular and functional variation in iPSC-derived sensory neurons",
+    "journal": "Nature Genetics",
+    "doi": "10.1038/s41588-017-0005-8",
+    "sourceUrl": "https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease/publications"
+  },
+  {
+    "year": 2017,
+    "authors": "Kilpinen H, Goncalves A, Leha A, et al.",
+    "title": "Common genetic variation drives molecular heterogeneity in human iPSCs",
+    "journal": "Nature",
+    "doi": "10.1038/nature22403",
+    "sourceUrl": "https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease/publications"
+  },
+  {
+    "year": 2015,
+    "authors": "Waszak SM, Delaneau O, Gschwind AR, et al.",
+    "title": "Population Variation and Genetic Control of Modular Chromatin Architecture in Humans",
+    "journal": "Cell",
+    "doi": "10.1016/j.cell.2015.08.001",
+    "sourceUrl": "https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease/publications"
+  },
+  {
+    "year": 2014,
+    "authors": "Waszak SM, Kilpinen H, Gschwind AR, et al.",
+    "title": "Identification and removal of low-complexity sites in allele-specific analysis of ChIP-seq data",
+    "journal": "Bioinformatics",
+    "doi": "10.1093/bioinformatics/btt667",
+    "sourceUrl": "https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease/publications"
+  },
+  {
+    "year": 2013,
+    "authors": "Kilpinen H, Waszak SM, Gschwind AR, et al.",
+    "title": "Coordinated effects of sequence variation on DNA binding, chromatin structure, and transcription",
+    "journal": "Science",
+    "doi": "10.1126/science.1242463",
+    "sourceUrl": "https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease/publications"
+  }
+]

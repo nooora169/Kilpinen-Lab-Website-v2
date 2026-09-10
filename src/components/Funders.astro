@@ -1,0 +1,7 @@
+---
+import funding from '../data/funders.json';
+---
+{funding.funders.length>0&&<div class="band"><section class="wrap" id="funding"><div class="sec-head"><h2>{funding.heading}</h2></div><div class="funders">{funding.funders.map(f=>{const cropped=f.logo==='/images/funders.png'&&f.cropWidth;return <div class="funder"><div class="logo-frame" style={cropped?`aspect-ratio:${f.cropWidth}/375`:undefined}>{cropped?<img src={f.logo} alt={f.name} width="2047" height="375" loading="lazy" style={`position:absolute;width:${2047/f.cropWidth*100}%;max-width:none;left:${-f.cropLeft/f.cropWidth*100}%;top:0`}/>:<img src={f.logo} alt={f.name} loading="lazy"/>}</div>{f.url&&<a href={f.url}>{f.name} ↗</a>}</div>})}</div></section></div>}
+<style>
+.funders{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1rem}.funder{background:#fff;border-radius:.5rem;padding:1.25rem;min-height:150px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem}.logo-frame{position:relative;overflow:hidden;width:100%;max-width:250px}.logo-frame img{display:block;max-height:none;width:100%;height:auto}.funder a{font-size:.875rem;color:var(--cyan);text-align:center}@media(max-width:1000px){.funders{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:600px){.funders{grid-template-columns:repeat(2,minmax(0,1fr))}.funder{padding:1rem;min-height:120px}}
+</style>

@@ -1,0 +1,26 @@
+{
+  "contact": {
+    "piName": "Helena Kilpinen",
+    "email": "helena.kilpinen@helsinki.fi",
+    "address": [
+      "Biomedicum 1, Haartmaninkatu 8",
+      "00290 Helsinki, Finland",
+      "Postal: P.O. Box 63, 00014 University of Helsinki"
+    ],
+    "switchboard": "+358 (0) 2941 911"
+  },
+  "headlineHighlight": "Cellular genetics of disease",
+  "affiliations": [
+    "Institute for Molecular Medicine Finland",
+    "HiLIFE",
+    "NC",
+    "Faculty of Medicine",
+    "Helsinki"
+  ],
+  "name": "Kilpinen Lab",
+  "tagline": "Cellular genetics of disease",
+  "prototypeBanner": false,
+  "kicker": "University of Helsinki · FIMM · HiLIFE · NC",
+  "headline": "Cellular genetics of disease",
+  "lede": "We are interested in cellular genetics and the cellular basis of developmental and other brain-related disorders. We use human induced pluripotent stem cells (iPSC) as models, and combine computational and experimental methods to study how genetic variation causes variability in cell phenotypes and contributes to differential susceptibility to diseases, both common and rare."
+}

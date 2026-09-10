@@ -1,0 +1,35 @@
+{
+  "heading": "Funded by",
+  "funders": [
+    {
+      "name": "University of Helsinki",
+      "logo": "/images/funders.png",
+      "cropLeft": 0,
+      "cropWidth": 355
+    },
+    {
+      "name": "Academy of Finland",
+      "logo": "/images/funders.png",
+      "cropLeft": 370,
+      "cropWidth": 320
+    },
+    {
+      "name": "Sigrid Jusélius Foundation",
+      "logo": "/images/funders.png",
+      "cropLeft": 705,
+      "cropWidth": 290
+    },
+    {
+      "name": "HiLIFE",
+      "logo": "/images/funders.png",
+      "cropLeft": 1005,
+      "cropWidth": 405
+    },
+    {
+      "name": "Open Targets",
+      "logo": "/images/funders.png",
+      "cropLeft": 1420,
+      "cropWidth": 627
+    }
+  ]
+}

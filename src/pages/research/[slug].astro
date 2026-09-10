@@ -1,0 +1,297 @@
+---
+import Base from '../../layouts/Base.astro';
+import DetailFields from '../../components/DetailFields.astro';
+import DetailMedia from '../../components/DetailMedia.astro';
+import PersonCard from '../../components/PersonCard.astro';
+import PubList from '../../components/PubList.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import site from '../../data/site.json';
+import publications from '../../data/publications.json';
+import { getCollection, getEntry, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const topics = await getCollection('topics', ({ data }) => !data.draft);
+  return topics.map((topic) => ({ params: { slug: topic.id }, props: { topic } }));
+}
+
+const { topic } = Astro.props;
+const d = topic.data;
+const projects=(await getCollection('projects',({data})=>!data.draft)).filter(p=>p.data.topics.includes(topic.id));
+const { Content } = await render(topic);
+
+// People are listed in the order given in the topic file.
+const members = (
+  await Promise.all(d.people.map((slug: string) => getEntry('people', slug)))
+).filter(Boolean);
+
+// Match the topic's DOIs against the publication feed, newest first.
+const wanted = new Set(d.dois.map((x: string) => x.toLowerCase()));
+const papers = publications
+  .filter((p) => p.doi && wanted.has(p.doi.toLowerCase()))
+  .sort((a, b) => (b.year || 0) - (a.year || 0));
+
+// DOIs listed on the topic but not yet in the feed, so nothing goes missing.
+const missing = d.dois.filter(
+  (doi: string) => !publications.some((p) => p.doi && p.doi.toLowerCase() === doi.toLowerCase())
+);
+
+const HEX: Record<string, string> = {
+  gfp: '#4FE0A0',
+  dapi: '#84A9FF',
+  mcherry: '#FF74A8',
+  farred: '#C39CFF',
+  amber: '#FFB472',
+  cyan: '#4FE0D8',
+  slate: '#A0C2D2',
+  chalk: '#D3E0E0',
+};
+
+const images=d.figures.filter(f=>f.image?.trim());
+const hasDetails=images.length>1||d.funders.some(f=>f.name.trim())||d.funding.some(f=>f.trim())||d.methods.some(f=>f.trim())||d.questions.some(f=>f.trim())||d.collaborators.some(f=>f.trim())||d.datasets.some(f=>f.name.trim());
+const hasSide = false;
+
+const facts = [
+  members.length ? ['People', String(members.length)] : null,
+  d.since ? ['Running since', d.since] : null,
+  d.dois.length ? ['Papers', String(d.dois.length)] : null,
+].filter(Boolean) as string[][];
+---
+
+<Base title={d.title} description={d.summary}>
+  <div class="t-hero" style={`--c: var(--${d.colour}); --wash: ${HEX[d.colour]}26`}>
+    <div class="glow"></div>
+    <div class="wrap">
+      <div class="t-hero-in">
+        <a class="back" href="/research/">&larr; All research topics</a>
+        <span class="t-status">{d.status}</span>
+        <h1 class="disp">{d.title}</h1>
+        <p class="t-hook">{d.hook}</p>
+        <p class="t-desc">{d.summary}</p>
+        <div class="t-facts">
+          {facts.map(([k, v]) => <span>{k}: {v}</span>)}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="band">
+    <div class="wrap">
+      <DetailMedia figures={images.slice(0,1)} showFunders={false} showHeading={false}/>
+      <div class={hasSide ? 'detail' : 'detail solo'}>
+        <div class="prose">
+          <Content />
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  {projects.length > 0 && <div class="band deep"><section class="wrap"><h2>Related projects</h2><div class="project-list">{projects.map(project=><ProjectCard project={project} topics={[topic]} publications={publications}/>)}</div></section></div>}
+
+  {hasDetails&&<div class="band"><div class="wrap"><DetailMedia figures={images.slice(1)} funders={d.funders} funding={d.funding}/><DetailFields methods={d.methods} questions={d.questions} collaborators={d.collaborators} resources={d.datasets}/></div></div>}
+
+  {members.length > 0 && (
+    <div class="band deep">
+      <div class="wrap">
+        <section>
+          <div class="sec-head"><h2 class="disp">Who works on this</h2></div>
+          <div class="people">
+            {members.map((p: any, i: number) => <PersonCard person={p} seed={5100 + i * 733} />)}
+          </div>
+        </section>
+      </div>
+    </div>
+  )}
+
+  {(papers.length > 0 || missing.length > 0) && (
+    <div class="band">
+      <div class="wrap">
+        <section>
+          <div class="sec-head"><h2 class="disp">Publications from this topic</h2></div>
+          {papers.length > 0 && <PubList publications={papers} />}
+          {missing.length > 0 && (
+            <p class="intro missing">
+              Also listed in this topic, not yet in the feed:{' '}
+              {missing.map((doi: string, i: number) => (
+                <>
+                  {i > 0 && ', '}
+                  <a href={`https://doi.org/${doi}`} rel="noopener">{doi}</a>
+                </>
+              ))}
+            </p>
+          )}
+        </section>
+      </div>
+    </div>
+  )}
+
+  <div class="band">
+    <div class="wrap">
+      <div class="cta" style={`--c: var(--${d.colour})`}>
+        <div>
+          <h3>Interested in this work?</h3>
+          <p>
+            Get in touch to discuss this research, potential collaborations or
+            your interests in the group.
+          </p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn solid" href={`mailto:${site.contact.email}`}>Email {site.contact.piName.split(' ')[0]}</a>
+          <a class="btn" href="/join/">Joining the group</a>
+          <a class="btn" href="/contact/">Contact page</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Base>
+
+<style>
+.project-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,18rem),1fr));gap:1.5rem}
+  .t-hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+  .t-hero .glow {
+    position: absolute;
+    inset: -60% -20% auto -20%;
+    height: 180%;
+    pointer-events: none;
+    background: radial-gradient(40rem 26rem at 24% 30%, var(--wash), transparent 66%);
+  }
+  .t-hero-in {
+    position: relative;
+    padding: 3.5rem 0 3rem;
+    display: grid;
+    gap: 1.1rem;
+    justify-items: start;
+  }
+  .back {
+    font-family: var(--f-mono);
+    font-size: var(--s--1);
+    color: var(--muted);
+    text-decoration: none;
+  }
+  .back:hover {
+    color: var(--c);
+  }
+  .t-status {
+    font-family: var(--f-mono);
+    font-size: var(--s--1);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--c);
+  }
+  .t-hero h1 {
+    font-size: var(--s-3);
+    max-width: 22ch;
+    margin: 0;
+  }
+  .t-hook {
+    margin: 0;
+    font-size: var(--s-1);
+    color: var(--c);
+    max-width: 48ch;
+  }
+  .t-desc {
+    margin: 0;
+    color: var(--ink-2);
+    max-width: 62ch;
+  }
+  .t-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.3rem;
+  }
+  .t-facts span {
+    font-family: var(--f-mono);
+    font-size: var(--s--1);
+    border: 1px solid var(--line-2);
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    color: var(--ink-2);
+  }
+
+  .detail {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 18rem);
+    gap: 3rem;
+    align-items: start;
+  }
+  .detail.solo {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .side {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .side-block {
+    border: 1px solid var(--line);
+    background: var(--panel);
+    padding: 1.1rem 1.2rem 1.25rem;
+  }
+  .side-block h3 {
+    margin: 0 0 0.5rem;
+    font-family: var(--f-mono);
+    font-size: var(--s--1);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .side-block ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    color: var(--ink-2);
+    font-size: calc(var(--s-0) * 0.94);
+  }
+  .side-block a {
+    color: var(--accent);
+  }
+
+  .missing {
+    font-size: var(--s--1);
+    color: var(--muted);
+    margin-top: 1.25rem;
+  }
+  .missing a {
+    color: var(--muted);
+    font-family: var(--f-mono);
+  }
+
+  .cta {
+    border: 1px solid var(--c);
+    background: linear-gradient(180deg, var(--raised), var(--panel));
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem 2rem;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .cta h3 {
+    margin: 0 0 0.35rem;
+    font-size: var(--s-2);
+    font-variation-settings: "wdth" 108, "wght" 620;
+    letter-spacing: -0.02em;
+  }
+  .cta p {
+    margin: 0;
+    color: var(--ink-2);
+    max-width: 46ch;
+  }
+  .cta-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 900px) {
+    .detail {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2rem;
+    }
+  }
+</style>
