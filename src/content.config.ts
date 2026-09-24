@@ -20,7 +20,7 @@ const CHANNELS = [
 ] as const;
 
 const detailFields={
- figures:z.array(z.object({image:z.string().optional(),caption:z.string(),credit:z.string().optional(),alt:z.string().optional()})).default([]),
+ figures:z.array(z.object({image:z.string().optional(),caption:z.string(),credit:z.string().optional(),alt:z.string().optional(),size:z.enum(['small','medium','full']).default('full'),placement:z.enum(['auto','above','left','right','below']).default('auto')})).default([]),
  funders:z.array(z.object({name:z.string(),logo:z.string().optional(),url:z.string().optional()})).default([]),
  methods:z.array(z.string()).default([]),
  questions:z.array(z.string()).default([]),
@@ -73,9 +73,9 @@ const people = defineCollection({
     interests: z.array(z.string()).default([]),
     ...detailFields,
     name: z.string(),
-    role: z.string(),
+    role: z.string().default(''),
     // 40 to 60 words, written for a first-year student.
-    focus: z.string(),
+    focus: z.string().default(''),
     // Needed for the publication feed. Ask everyone for it.
     orcid: z.string().optional(),
     email: z.string().optional(),
@@ -117,6 +117,9 @@ const gallery = defineCollection({
     photo: z.string().optional(),
     credit: z.string().optional(),
     date: z.string().optional(),
+    featured: z.boolean().default(false),
+    group: z.string().default(''),
+    fit: z.enum(['contain', 'cover']).default('cover'),
     wide: z.boolean().default(false),
     layout: z.enum(["landscape", "portrait"]).default("landscape"),
     alt: z.string().optional(),

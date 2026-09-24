@@ -1,0 +1,211 @@
+---
+import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import pageSettings from '../data/page-settings.json';
+
+const slideshowWidth = Math.min(1000, Math.max(280, Number(pageSettings.slideshowWidth) || 420));
+const slideshowHeight = Math.min(600, Math.max(140, Number(pageSettings.slideshowHeight) || 220));
+
+const gallery = (await getCollection('gallery')).filter(entry => entry.data.photo?.trim())
+  .sort((first, second) => first.data.order - second.data.order);
+const localPhotos = import.meta.glob<{ default: ImageMetadata }>('/public/{uploads,images}/**/*.{jpg,jpeg,png,webp}', { eager: true });
+const images = new Map(await Promise.all(gallery.map(async entry => {
+  const original = localPhotos[`/public${entry.data.photo}`]?.default;
+  if (!original) return [entry.id, { src: entry.data.photo }] as const;
+  const widths = [...new Set([480, 960, 1440].map(width => Math.min(width, original.width)))];
+  const sources = await Promise.all(widths.map(width => getImage({ src: original, width, format: 'webp', quality: 80 })));
+  return [entry.id, {
+    src: sources[sources.length - 1].src,
+    srcset: sources.map((source, index) => `${source.src} ${widths[index]}w`).join(', '),
+    width: original.width,
+    height: original.height,
+  }] as const;
+})));
+const featured = gallery.filter(entry => entry.data.featured)
+  .sort((first, second) => first.data.order - second.data.order);
+const yearOf = (date?: string) => date?.match(/^\d{4}(?:$|-)/)?.[0].slice(0, 4) || 'undated';
+const years = [...new Set(gallery.map(entry => yearOf(entry.data.date)))].sort((first, second) => second.localeCompare(first));
+const groups = [...new Set(gallery.map(entry => entry.data.group.trim()))];
+const dateLabel = (date: string) => {
+  if (!/^\d{4}(?:-\d{2})?(?:-\d{2})?$/.test(date)) return date;
+  if (date.length === 4) return date;
+  const parsed = new Date(`${date.length === 7 ? `${date}-01` : date}T00:00:00Z`);
+  if (Number.isNaN(parsed.getTime())) return date;
+  return new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', ...(date.length === 10 ? { day: 'numeric' as const } : {}), timeZone: 'UTC' }).format(parsed);
+};
+---
+<div class="band">
+  <section class="wrap" id="lablife">
+    <div class="life-heading"><h1>{pageSettings.labLifeHeading}</h1><a class="btn" href="/join/">Get to know us ↗</a></div>
+    <div data-gallery>
+      {years.length > 1 && <div class="gallery-filter" data-year-filter hidden>
+        <label for="photo-year">Browse photos</label>
+        <select id="photo-year" data-year-select aria-controls="life-archive">
+          <option value="all">All years</option>
+          {years.filter(year => year !== 'undated').map(year => <option value={year}>{year}</option>)}
+          {years.includes('undated') && <option value="undated">Undated</option>}
+        </select>
+      </div>}
+      <div id="life-archive">
+        {groups.map((group, groupIndex) => <section class="gallery-group" data-gallery-group aria-label={group || 'Lab photo collage'}>
+          {group && <h2>{group}</h2>}
+          <div class="life-collage">
+            {gallery.filter(entry => entry.data.group.trim() === group)
+              .map((entry, index) => <figure class:list={['life-tile', { 'tile-wide': entry.data.wide, 'tile-tall': entry.data.layout === 'portrait', 'tile-lead': groupIndex === 0 && index === 0 }]} style={`--fit:${entry.data.fit};--position:${entry.data.position}`} data-gallery-item data-year={yearOf(entry.data.date)} tabindex="-1">
+                <img {...images.get(entry.id)} sizes={entry.data.wide || index === 0 ? '(max-width: 550px) 90vw, 45vw' : '(max-width: 550px) 45vw, 25vw'} alt={entry.data.alt || entry.data.caption} loading="lazy" decoding="async"/>
+                <figcaption>{entry.data.caption}{entry.data.date && <time datetime={entry.data.date}>{dateLabel(entry.data.date)}</time>}{entry.data.credit && <span class="credit">{entry.data.credit}</span>}</figcaption>
+              </figure>)}
+          </div>
+        </section>)}
+      </div>
+      {gallery.length === 0 && <p>Lab photographs will appear here.</p>}
+      <div class="gallery-controls"><p data-gallery-status role="status"></p><button class="btn" type="button" data-show-more aria-controls="life-archive" hidden>Show more photos</button></div>
+    </div>
+    {featured.length > 0 && <section class="slideshow" style={`--slideshow-width:${slideshowWidth}px;--slideshow-height:${slideshowHeight}px`} aria-label="Featured lab photographs" aria-roledescription="carousel" data-slideshow>
+      <h2>Featured moments</h2>
+      <div id="featured-slides" class="slides" aria-live="off">
+        {featured.map((entry, index) => <figure class="slide" data-slide hidden={index !== 0} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${featured.length}`}>
+          <img {...images.get(entry.id)} sizes={`(max-width: 550px) 90vw, ${slideshowWidth - 34}px`} alt={entry.data.alt || entry.data.caption} loading="lazy" decoding="async"/>
+          <figcaption><span>{entry.data.caption}</span>{entry.data.date && <time datetime={entry.data.date}>{dateLabel(entry.data.date)}</time>}{entry.data.credit && <span class="credit">{entry.data.credit}</span>}</figcaption>
+        </figure>)}
+      </div>
+      <div class="slide-controls" data-slide-controls hidden>
+        <button class="btn" type="button" data-previous aria-controls="featured-slides" aria-label="Previous photograph">← Previous</button>
+        <span class="slide-count" data-slide-count aria-live="off">1 / {featured.length}</span>
+        <button class="btn" type="button" data-next aria-controls="featured-slides" aria-label="Next photograph">Next →</button>
+        <button class="btn" type="button" data-pause aria-controls="featured-slides">Pause slideshow</button>
+      </div>
+    </section>}
+
+  </section>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-slideshow]').forEach(carousel => {
+    const slides = Array.from(carousel.querySelectorAll<HTMLElement>('[data-slide]'));
+    const controls = carousel.querySelector<HTMLElement>('[data-slide-controls]')!;
+    const track = carousel.querySelector<HTMLElement>('.slides')!;
+    const count = carousel.querySelector<HTMLElement>('[data-slide-count]')!;
+    const pause = carousel.querySelector<HTMLButtonElement>('[data-pause]')!;
+    if (slides.length < 2) return;
+    controls.hidden = false;
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let current = 0;
+    let paused = motion.matches;
+    let hovering = false;
+    let pointerPaused: boolean | undefined;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    function schedule() {
+      clearTimeout(timer);
+      const running = !paused && !hovering && !document.hidden;
+      track.setAttribute('aria-live', running ? 'off' : 'polite');
+      count.setAttribute('aria-live', running ? 'off' : 'polite');
+      pause.textContent = paused ? 'Play slideshow' : 'Pause slideshow';
+      if (running) timer = setTimeout(() => show(current + 1), 6000);
+    }
+
+    function show(index: number) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach((slide, slideIndex) => { slide.hidden = slideIndex !== current; });
+      count.textContent = `${current + 1} / ${slides.length}`;
+      schedule();
+    }
+
+    function navigate(index: number) {
+      paused = true;
+      show(index);
+    }
+
+    carousel.querySelector('[data-previous]')!.addEventListener('click', () => navigate(current - 1));
+    carousel.querySelector('[data-next]')!.addEventListener('click', () => navigate(current + 1));
+    pause.addEventListener('pointerdown', () => { pointerPaused = paused; });
+    pause.addEventListener('pointercancel', () => { pointerPaused = undefined; });
+    pause.addEventListener('click', event => {
+      paused = !(event.detail > 0 ? pointerPaused ?? paused : paused);
+      pointerPaused = undefined;
+      schedule();
+    });
+    carousel.addEventListener('keydown', event => {
+      const target = { ArrowLeft: current - 1, ArrowRight: current + 1, Home: 0, End: slides.length - 1 }[event.key];
+      if (target === undefined) return;
+      event.preventDefault();
+      navigate(target);
+    });
+    carousel.addEventListener('focusin', () => { paused = true; schedule(); });
+    carousel.addEventListener('mouseenter', () => { hovering = true; schedule(); });
+    carousel.addEventListener('mouseleave', () => { hovering = false; schedule(); });
+    document.addEventListener('visibilitychange', schedule);
+    motion.addEventListener('change', () => { if (motion.matches) paused = true; schedule(); });
+    schedule();
+  });
+
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach(gallery => {
+    const items = Array.from(gallery.querySelectorAll<HTMLElement>('[data-gallery-item]'));
+    const groups = gallery.querySelectorAll<HTMLElement>('[data-gallery-group]');
+    const filter = gallery.querySelector<HTMLElement>('[data-year-filter]');
+    const year = gallery.querySelector<HTMLSelectElement>('[data-year-select]');
+    if (filter) filter.hidden = false;
+    const matching = () => items.filter(item => !year || year.value === 'all' || item.dataset.year === year.value);
+    const more = gallery.querySelector<HTMLButtonElement>('[data-show-more]')!;
+    const status = gallery.querySelector<HTMLElement>('[data-gallery-status]')!;
+    let visible = Math.min(8, items.length);
+
+    function update() {
+      const filtered = matching();
+      items.forEach(item => { const index = filtered.indexOf(item); item.hidden = index < 0 || index >= visible; });
+      filtered.forEach((item, index) => item.classList.toggle('tile-lead', index === 0));
+      groups.forEach(group => { group.hidden = !group.querySelector('[data-gallery-item]:not([hidden])'); });
+      more.hidden = visible >= filtered.length;
+      status.textContent = items.length ? `Showing ${Math.min(visible, filtered.length)} of ${filtered.length} photos` : '';
+    }
+
+    more.addEventListener('click', () => {
+      const filtered = matching();
+      const firstNew = filtered[visible];
+      visible = Math.min(visible + 8, filtered.length);
+      update();
+      firstNew?.focus();
+    });
+    year?.addEventListener('change', () => { visible = 8; update(); });
+    update();
+  });
+</script>
+
+<style>
+  .life-heading { display: flex; align-items: center; justify-content: space-between; gap: 2rem; margin-bottom: 2.5rem; }
+  h1 { white-space: pre-line; font-size: clamp(2.6rem, 5vw, 3.4rem); letter-spacing: -.05em; line-height: 1.1; margin: 0; }
+  .gallery-filter { display: flex; align-items: center; gap: .75rem; margin-bottom: 1.25rem; font-size: .875rem; color: var(--muted); }
+  select { font: inherit; color: var(--ink); background: var(--panel); padding: .5rem .75rem; border: 1px solid var(--line-2); border-radius: .3rem; min-height: 44px; }
+  select:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+  .gallery-group + .gallery-group { margin-top: 2.5rem; }
+  .gallery-group h2 { font-size: var(--s-2); }
+  .life-collage { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); grid-auto-rows: 220px; grid-auto-flow: dense; gap: 1.3rem; }
+  .life-tile { display: grid; grid-template-rows: minmax(0, 1fr) auto; margin: 0; min-width: 0; min-height: 0; overflow: hidden; border: 1px solid var(--line-2); border-radius: 8px; background: var(--panel); scroll-margin-top: 2rem; }
+  .life-tile.tile-wide { grid-column: span 2; }
+  .life-tile.tile-tall { grid-row: span 2; }
+  .life-tile.tile-lead { grid-column: span 2; grid-row: span 2; }
+  .life-tile img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: var(--fit, cover); object-position: var(--position, 50% 50%); }
+  figcaption { color: var(--ink-2); font-size: .8rem; padding: .8rem 1rem; overflow-wrap: anywhere; border-top: 1px solid var(--line); }
+  time, .credit { color: var(--muted); font-size: .75rem; }
+  .life-tile time, .life-tile .credit { display: inline; margin-left: .4rem; }
+  .life-tile:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+  .gallery-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1.5rem; }
+  .gallery-controls p { color: var(--muted); font-size: .875rem; }
+  .slideshow { width: 100%; max-width: var(--slideshow-width, 420px); margin-top: 3rem; padding: 1rem; border: 1px solid var(--line-2); border-radius: 8px; background: var(--panel); }
+  .slideshow h2 { font-size: 1.1rem; margin: 0 0 1rem; }
+  .slide { margin: 0; }
+  .slide img { display: block; width: 100%; height: var(--slideshow-height, 220px); object-fit: contain; }
+  .slide figcaption { min-height: 3.5rem; display: flex; flex-wrap: wrap; gap: .25rem .6rem; padding: .6rem 0; border: 0; }
+  .slide-controls { display: flex; align-items: center; justify-content: center; gap: .5rem; flex-wrap: wrap; }
+  .slide-controls .btn { font-size: .75rem; padding: .5rem .7rem; min-height: 44px; }
+  .slide-count { font: .8rem var(--f-mono); min-width: 3rem; text-align: center; }
+  @media (max-width: 900px) { .life-collage { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 210px; } }
+  @media (max-width: 550px) {
+    .life-heading { align-items: flex-start; flex-direction: column; gap: 1.5rem; }
+    .life-collage { grid-auto-rows: 175px; gap: .8rem; }
+    .life-tile figcaption { padding: .6rem; font-size: .75rem; }
+    .slide img { height: min(var(--slideshow-height, 220px), 190px); }
+  }
+</style>

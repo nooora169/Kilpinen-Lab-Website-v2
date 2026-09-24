@@ -1,0 +1,16 @@
+---
+import '../styles/global.css';
+interface Props { destination: string; title: string; }
+const { destination, title } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="refresh" content={`0;url=${destination}`}/>
+    <link rel="canonical" href={destination}/>
+    <title>{title} · Kilpinen Lab</title>
+  </head>
+  <body><main class="wrap band"><h1>{title}</h1><p>This content has moved. <a href={destination}>Continue to {title}</a>.</p></main></body>
+</html>

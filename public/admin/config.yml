@@ -21,9 +21,10 @@ collections:
   - shortName
   fields:
   - name: figures
-    label: Images and figures
+    label: Results images and figures
     widget: list
     required: false
+    hint: Add real results only. Multiple images are supported; empty image entries stay hidden.
     fields:
     - name: image
       label: Image
@@ -32,6 +33,34 @@ collections:
     - name: caption
       label: Caption
       widget: string
+    - name: size
+      label: Display size
+      widget: select
+      options:
+      - label: Small (logos, up to 280 px)
+        value: small
+      - label: Medium (up to 640 px)
+        value: medium
+      - label: Full available width
+        value: full
+      default: full
+      hint: Preserves image proportions; never crops scientific figures.
+    - name: placement
+      label: Image placement
+      widget: select
+      default: auto
+      options:
+      - label: Automatic (original layout)
+        value: auto
+      - label: Above the text
+        value: above
+      - label: Left of the text
+        value: left
+      - label: Right of the text
+        value: right
+      - label: Below the text
+        value: below
+      hint: "Side images stack after the text on mobile. Display size is a maximum within the column. Automatic puts the first project image above the text and other images below; topic images go below."
     - name: alt
       label: Image description for accessibility
       widget: string
@@ -165,9 +194,10 @@ collections:
     widget: boolean
     default: false
   - name: body
-    label: Full page content (headings, paragraphs, images, links)
+    label: Extended topic description
     widget: markdown
     required: false
+    hint: Appears under More about this topic on the Research page.
 - name: people
   label: People
   label_singular: Person
@@ -192,6 +222,18 @@ collections:
     - name: caption
       label: Caption
       widget: string
+    - name: size
+      label: Display size
+      widget: select
+      options:
+      - label: Small (logos, up to 280 px)
+        value: small
+      - label: Medium (up to 640 px)
+        value: medium
+      - label: Full available width
+        value: full
+      default: full
+      hint: Preserves image proportions; never crops scientific figures.
     - name: alt
       label: Image description for accessibility
       widget: string
@@ -236,9 +278,11 @@ collections:
   - name: role
     label: Role and title
     widget: string
+    required: false
   - name: focus
     label: Research summary
     widget: text
+    required: false
   - name: orcid
     label: ORCID iD
     widget: string
@@ -373,6 +417,27 @@ collections:
     label: Photo
     widget: image
     required: false
+    hint: Entries without a photo stay saved but are hidden from the gallery.
+  - name: featured
+    label: Include in featured slideshow
+    widget: boolean
+    default: false
+    hint: Featured photos also remain in the collage. Sort order sets slideshow order.
+  - name: group
+    label: Photo group
+    widget: string
+    required: false
+    hint: Give photos the same group name to display them together. Leave blank for the main collage. Sort order arranges groups and photos.
+  - name: fit
+    label: Image framing
+    widget: select
+    options:
+    - label: Show the whole photograph
+      value: contain
+    - label: Fill the frame (crop edges)
+      value: cover
+    default: cover
+    hint: Applies to the static collages. Slideshow photos are always shown in full.
   - name: credit
     label: Photo credit
     widget: string
@@ -381,6 +446,8 @@ collections:
     label: Date
     widget: string
     required: false
+    pattern: ['^$|^\d{4}(-\d{2})?(-\d{2})?$', 'Use YYYY, YYYY-MM or YYYY-MM-DD.']
+    hint: Enables filtering by year. Leave unknown dates empty.
   - name: alt
     label: Image description for accessibility
     widget: string
@@ -439,6 +506,38 @@ collections:
 - name: settings
   label: Site settings
   files:
+  - name: page-headings
+    label: Page headings and slideshow
+    file: src/data/page-settings.json
+    fields:
+    - name: peopleHeading
+      label: People heading
+      widget: string
+    - name: researchHeading
+      label: Research heading
+      widget: string
+    - name: labLifeHeading
+      label: Lab life heading
+      widget: text
+      hint: A new line creates a line break in the heading.
+    - name: slideshowWidth
+      label: Slideshow maximum width (pixels)
+      widget: number
+      value_type: int
+      min: 280
+      max: 1000
+      step: 10
+      default: 420
+      hint: The whole slideshow card. Automatically shrinks to fit smaller screens.
+    - name: slideshowHeight
+      label: Slideshow photo height (pixels)
+      widget: number
+      value_type: int
+      min: 140
+      max: 600
+      step: 10
+      default: 220
+      hint: The photo area only; captions and controls sit below. Photos keep their proportions. Small phones cap this at 190px.
   - name: site
     label: Homepage text and contact details
     file: src/data/site.json
@@ -512,6 +611,34 @@ collections:
     - name: caption
       label: Caption
       widget: string
+    - name: size
+      label: Display size
+      widget: select
+      options:
+      - label: Small (logos, up to 280 px)
+        value: small
+      - label: Medium (up to 640 px)
+        value: medium
+      - label: Full available width
+        value: full
+      default: full
+      hint: Preserves image proportions; never crops scientific figures.
+    - name: placement
+      label: Image placement
+      widget: select
+      default: auto
+      options:
+      - label: Automatic (original layout)
+        value: auto
+      - label: Above the text
+        value: above
+      - label: Left of the text
+        value: left
+      - label: Right of the text
+        value: right
+      - label: Below the text
+        value: below
+      hint: "Side images stack after the text on mobile. Display size is a maximum within the column. Automatic puts the first project image above the text and other images below; topic images go below."
     - name: alt
       label: Image description for accessibility
       widget: string

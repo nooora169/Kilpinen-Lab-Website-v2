@@ -17,3 +17,9 @@ BRAIN-iPSC project, retrieved 10 September 2026 from https://www.helsinki.fi/en/
 - public/images/brain-ipsc-logo.webp: https://www.helsinki.fi/assets/drupal/styles/16_10_xl_2x/s3/media-image/bipsc-manhattan-neuron-3.png.webp?itok=KXNJsAMq
 - public/images/brain-ipsc-prs.webp: https://www.helsinki.fi/assets/drupal/styles/16_10_xl_2x/s3/media-image/PRS-with-margin.png.webp?itok=nBaJKutY
 Project priority is editorial (requested by Nour). The official page states that sample collection started in spring 2026; no comparative activity claim or unverified project publications were added.
+
+Lab-life additions, supplied by the user for this local review:
+- `public/uploads/tvarminne-group.jpg`: unchanged copy of `tvarminne-group-photo-6704092.jpg`.
+- `public/uploads/woodland-selfie.jpg`: unchanged copy of `IMG_2868.jpg`.
+- `public/uploads/woodland-group.jpg`: unchanged copy of `IMG_2857.jpg`.
+Dates and photographer credits have not been supplied. No identities were inferred from these group photographs. Framing is controlled by CSS; the original files are preserved. Astro creates responsive WebP delivery copies at up to 480, 960 and 1440 pixels wide so pages do not download the full-size originals.

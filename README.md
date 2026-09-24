@@ -32,16 +32,17 @@ Sources: https://decapcms.org/docs/decap-proxy/ and https://decapcms.org/docs/gi
 
 ## Content model
 
-- `src/content/topics/*.md`: automatically appears in the floating topic grid and at `/research/filename/`. No coordinates needed. Includes related people, DOI references, funders, collaborators and datasets.
+- `src/content/topics/*.md`: appears in the bubble map and at `/research/#filename`. No coordinates needed. Includes related people, DOI references, multiple results figures, funders, collaborators and datasets. Old `/research/filename/` URLs redirect to the section using static HTML compatible with GitHub Pages.
 - `src/content/projects/*.md`: automatically gets `/projects/filename/`, appears on the homepage and related topic pages. Includes topics, team, publications, resources/documents, collaborators and funding.
-- `src/content/people/*.md`: automatically gets `/people/filename/`. Add a biography below the frontmatter; associate people using their filenames without `.md`. Missing photos show initials.
+- `src/content/people/*.md`: appears at `/people/#filename`, with portrait, role, research summary, optional biography and external profile links. Associate people using their filenames without `.md`. Missing photos show initials. Old `/people/filename/` URLs redirect to the person on the People page.
 - `src/content/pages/*.md`: creates `/filename/`; `navLabel` adds it to navigation. Reserve `research`, `projects`, `people`, `admin` and `404` for built-in routes.
-- `src/content/gallery/*.md`: only entries with real photos appear. Put uploads under `public/` and use the URL path, such as `/uploads/retreat.jpg`. Include a caption, date and credit.
+- `src/content/gallery/*.md`: only entries with real photos appear. Put uploads under `public/` and use the URL path, such as `/uploads/retreat.jpg`. Include a caption, date, alt text and credit. Set `featured: true` for slideshow inclusion; use `group` and `order` to arrange the bordered collage. Visitors can filter by year. See `LAB-LIFE-EDITING.md` for controls, ordering and local editing.
+- `src/data/page-settings.json`: CMS-editable People, Research and Lab life page headings.
 - `src/content/tools/*.md`: repository cards.
 - `src/data/publications.json`: curated list; first three items form the results section. Optional `summary` provides a brief result description. Enter preprints with journal `bioRxiv` to display the review-status label.
 - `src/data/site.json`: identity and contact text. The headline and its highlighted phrase are editable here; structural design edits belong in Astro and CSS.
 
-All are available in the Decap forms. Add a topic with a title, shortName, hook, summary, colour, order and optional relationship fields, then write the long description in Markdown. Topic pages are generated automatically. Use `draft: true` to hide a topic, project or general page. The schema validates content during the build.
+All are available in the Decap forms. Add a topic with a title, shortName, hook, summary, colour, order and optional relationship fields, then write the extended description in Markdown. Topic sections are generated automatically; extended descriptions open under More about this topic. The bubble map uses a local muted teal/blue/slate palette while other site colour tokens remain unchanged. Use `draft: true` to hide a topic, project or general page. The schema validates content during the build.
 
 ## Publication imports
 
@@ -65,7 +66,7 @@ After launch, assign a lab owner and backup maintainer, review edits before publ
 
 The research map now uses fixed, irregular positions and static surrounding dots. It is labelled as a conceptual map, not a measured UMAP. New topics beyond the initial eight are placed in additional rows with an expanded viewBox. Mobile visitors also receive full-size topic links.
 
-Topic and project detail forms now include Images and figures (image, caption, alt text, credit), Funder logos (name, logo, URL), Methods and Research questions. Existing funding, collaborators and resource fields remain supported. Empty areas intentionally show labelled placeholders in this private review. Person profiles include a portrait placeholder, interests, optional figures, related projects and papers from their related research topics. These paper links do not assert authorship. Before public launch, fill or intentionally hide empty placeholder sections.
+Topic and project forms include figures (image, caption, alt text, credit), Funder logos (name, logo, URL), Methods and Research questions. Existing funding, collaborators and resource fields remain supported. Topic sections hide empty figure areas, retain the scientific text and show related people, projects and publications. The People page shows existing short biographies and external University of Helsinki links together. No member portraits or topic result figures were present in the local content when this consolidation was made; uploads can be added through the existing forms.
 
 People summaries were paraphrased from the lab and University of Helsinki people pages; each profile links its source. Role labels retain the existing listing; public sources disagree about Marc's role (UH lists Doctoral Researcher, the lab page says MSc Research Assistant).
 
@@ -73,8 +74,8 @@ The admin landing page is now a real Astro route at /admin/, so it resolves in t
 
 ## Pages and the new homepage
 
-Home keeps the original introduction and neuron, followed by the original research
-map, the latest three news items, funder logos and a contact link. Research and
+Home keeps the original introduction and neuron, followed by Current projects,
+the latest three news items, funder logos and a contact link. The bubble map, research topics and
 projects are grouped at /research/; People, Publications, Resources, Lab life and
 News each have their own pages. Existing topic, project and person URLs remain
 valid. The homepage forwards old section links to their new destinations.

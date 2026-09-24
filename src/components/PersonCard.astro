@@ -1,21 +1,14 @@
 ---
+import { render } from 'astro:content';
 interface Props {
   person: any;
   seed?: number;
+  onPeoplePage?: boolean;
 }
-const { person, seed = 1 } = Astro.props;
+const { person, onPeoplePage = false } = Astro.props;
 const d = person.data;
-
-const HEX: Record<string, string> = {
-  gfp: '#4FE0A0',
-  dapi: '#84A9FF',
-  mcherry: '#FF74A8',
-  farred: '#C39CFF',
-  amber: '#FFB472',
-  cyan: '#4FE0D8',
-  slate: '#A0C2D2',
-  chalk: '#D3E0E0',
-};
+const biography = onPeoplePage && person.body?.trim() ? await render(person) : undefined;
+const Content = biography?.Content;
 
 const initials = d.name
   .split(' ')
@@ -25,7 +18,7 @@ const initials = d.name
   .join('');
 ---
 
-<article class="person" style={`--c: var(--${d.colour})`}>
+<article class="person" id={onPeoplePage ? person.id : undefined} style={`--c: var(--${d.colour})`}>
   <div class="av">
     {d.photo ? (
       <img src={d.photo} alt={d.name} loading="lazy" width="320" height="320" />
@@ -37,18 +30,30 @@ const initials = d.name
     )}
   </div>
   <div class="meta">
-    <a class="p-name" href={`/people/${person.id}/`}>{d.name} ↗</a>
-    <span class="p-role">{d.role}</span>
-    <span class="p-focus">{d.focus}</span>
-    {(d.links.length > 0 || d.orcid || d.email) && (
+    <h2 class="p-name">{onPeoplePage ? d.name : <a href={`/people/#${person.id}`}>{d.name}</a>}</h2>
+    {d.role && <span class="p-role">{d.role}</span>}
+    {d.focus && <span class="p-focus">{d.focus}</span>}
+    {Content && <div class="prose p-focus"><Content/></div>}
+    {(d.links.length > 0 || d.orcid || d.email || d.sourceUrl) && (
       <span class="p-links">
         {d.email && <a href={`mailto:${d.email}`}>email</a>}
         {d.orcid && <a href={`https://orcid.org/${d.orcid}`} rel="noopener">ORCID</a>}
         {d.links.map((l: any) => (
           <a href={l.url} rel="noopener">{l.label}</a>
         ))}
+        {d.sourceUrl && !d.links.some((link: any) => link.url === d.sourceUrl) && <a href={d.sourceUrl}>University of Helsinki ↗</a>}
       </span>
     )}
     {d.alumnus && d.nowAt && <span class="p-focus">Now at {d.nowAt}</span>}
   </div>
 </article>
+
+<style>
+  .person { scroll-margin-top: 2rem; }
+  .person:target { outline: 3px solid var(--accent); outline-offset: 4px; }
+  .p-name { margin: 0; }
+  .p-name:hover { text-decoration: none; }
+  .p-name a { text-decoration: none; }
+  .p-name a:hover { text-decoration: underline; }
+  .p-links { overflow-wrap: anywhere; }
+</style>

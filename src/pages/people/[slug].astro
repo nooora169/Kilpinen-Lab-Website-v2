@@ -1,15 +1,9 @@
 ---
-import Base from '../../layouts/Base.astro';
-import DetailMedia from '../../components/DetailMedia.astro';
-import PubList from '../../components/PubList.astro';
-import publications from '../../data/publications.json';
-import {getCollection,render} from 'astro:content';
-export async function getStaticPaths(){return (await getCollection('people')).map(person=>({params:{slug:person.id},props:{person}}));}
-const {person}=Astro.props;const d=person.data;const {Content}=await render(person);
-const topics=(await getCollection('topics',({data})=>!data.draft)).filter(t=>t.data.people.includes(person.id));
-const projects=(await getCollection('projects',({data})=>!data.draft)).filter(p=>p.data.people.includes(person.id)||p.data.topics.some(id=>topics.some(t=>t.id===id)));
-const dois=new Set(topics.flatMap(t=>t.data.dois));
-const papers=publications.filter(p=>dois.has(p.doi));
+import LegacyRedirect from '../../components/LegacyRedirect.astro';
+import { getCollection } from 'astro:content';
+export async function getStaticPaths() {
+  return (await getCollection('people')).map(person => ({ params: { slug: person.id }, props: { person } }));
+}
+const { person } = Astro.props;
 ---
-<Base title={d.name} description={d.focus}><div class="band"><div class="wrap"><a href="/people/">← Meet the group</a><header><div>{d.photo?<img src={d.photo} alt={d.name} width="240" height="240"/>:<div class="placeholder portrait"><span>PORTRAIT PLACEHOLDER</span><strong>{d.name}</strong></div>}</div><div><p class="eyebrow">{d.role}{d.alumnus&&' · Alumni'}</p><h1 class="disp">{d.name}</h1><p class="intro">{d.focus}</p><div class="links">{d.email&&<a class="btn" href={`mailto:${d.email}`}>Email ↗</a>}{d.orcid&&<a class="btn" href={`https://orcid.org/${d.orcid}`}>ORCID ↗</a>}{d.links.map(l=><a class="btn" href={l.url}>{l.label} ↗</a>)}</div></div></header><div class="prose"><Content/>{d.sourceUrl&&<p><a href={d.sourceUrl}>Profile at the University of Helsinki ↗</a></p>}</div>{topics.length>0&&<section><h2>Research interests</h2><div class="links">{topics.map(t=><a class="btn" href={`/research/${t.id}/`}>{t.data.shortName} ↗</a>)}</div></section>}{projects.length>0&&<section><h2>Related projects</h2><ul>{projects.map(p=><li><a href={`/projects/${p.id}/`}>{p.data.title}</a></li>)}</ul></section>}<section><h2>Interests</h2>{d.interests.length?<ul>{d.interests.map(i=><li>{i}</li>)}</ul>:<div class="placeholder"><strong>Research interests to add</strong></div>}</section>{!projects.length&&<section><h2>Related projects</h2><div class="placeholder"><strong>Project links to add</strong></div></section>}{papers.length>0&&<section><h2>Papers from related research</h2><PubList publications={papers}/></section>}<DetailMedia figures={d.figures} showFunders={false}/></div></div></Base>
-<style>header{display:flex;gap:2rem;margin:3rem 0}header>div:empty{display:none}header img{border-radius:.5rem;object-fit:cover}h1{font-size:clamp(2.2rem,5vw,4rem);margin:1rem 0}section{margin:3rem 0}.links{display:flex;gap:.8rem;flex-wrap:wrap}@media(max-width:650px){header{flex-direction:column}}</style>
+<LegacyRedirect destination={`/people/#${person.id}`} title={person.data.name}/>

@@ -1,0 +1,46 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import DetailMedia from './DetailMedia.astro';
+
+interface Props {
+  figures: CollectionEntry<'projects'>['data']['figures'];
+  firstImageAbove?: boolean;
+}
+const { figures, firstImageAbove = false } = Astro.props;
+const images = figures.filter(figure => figure.image?.trim());
+const placed = images.map((figure, index) => ({
+  ...figure,
+  placement: figure.placement && figure.placement !== 'auto'
+    ? figure.placement : firstImageAbove && index === 0 ? 'above' : 'below',
+}));
+const above = placed.filter(figure => figure.placement === 'above');
+const left = placed.filter(figure => figure.placement === 'left');
+const right = placed.filter(figure => figure.placement === 'right');
+const below = placed.filter(figure => figure.placement === 'below');
+---
+<div class="content-media">
+  {above.length > 0 && <div class="images-above"><DetailMedia figures={above} showFunders={false} showHeading={false} compact/></div>}
+  <div class:list={['content-with-images', { 'has-left': left.length > 0, 'has-right': right.length > 0 }]}>
+    <div class="content-copy"><slot/></div>
+    {left.length > 0 && <div class="image-side image-left"><DetailMedia figures={left} showFunders={false} showHeading={false} compact stacked/></div>}
+    {right.length > 0 && <div class="image-side image-right"><DetailMedia figures={right} showFunders={false} showHeading={false} compact stacked/></div>}
+  </div>
+  <DetailMedia figures={below} showFunders={false}/>
+</div>
+<style>
+  .images-above { margin-bottom: 2rem; }
+  .content-with-images { display: grid; grid-template-columns: minmax(0, 1fr); gap: 2.5rem; align-items: start; }
+  .content-copy, .image-side { min-width: 0; }
+  .content-copy { grid-area: content; }
+  .content-with-images { grid-template-areas: 'content'; }
+  .has-left { grid-template-columns: minmax(0, .85fr) minmax(0, 1.3fr); grid-template-areas: 'left content'; }
+  .has-right { grid-template-columns: minmax(0, 1.3fr) minmax(0, .85fr); grid-template-areas: 'content right'; }
+  .has-left.has-right { grid-template-columns: minmax(0, .7fr) minmax(0, 1.3fr) minmax(0, .7fr); grid-template-areas: 'left content right'; }
+  .image-left { grid-area: left; }
+  .image-right { grid-area: right; }
+  .content-copy :global(.prose > :first-child) { margin-top: 0; }
+  @media (max-width: 900px) {
+    .content-with-images { grid-template-columns: minmax(0, 1fr); grid-template-areas: none; gap: 1.5rem; }
+    .content-copy, .image-side { grid-area: auto; }
+  }
+</style>

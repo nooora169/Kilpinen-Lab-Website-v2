@@ -1,21 +1,22 @@
 ---
-title: BRAIN-iPSC
-summary: Modelling how polygenic risk for brain disorders affects human stem cell-derived neurons.
-topics: []
-people: []
-dois: []
-colour: cyan
-status: Active
-order: 0
 figures:
-  - image: /images/brain-ipsc-logo.webp
-    caption: Modelling phenotypic convergence of brain diseases with stem cell-derived neurons
-    alt: BRAIN-iPSC logo
-    credit: BRAIN-iPSC · University of Helsinki
+  - size: medium
+    placement: right
+    image: /uploads/copy-of-manhattan-plot-with-a-neuron-icon-and-text.png
+    caption: logo @biorender
   - image: /images/brain-ipsc-prs.webp
     caption: Polygenic risk score distribution
     alt: Polygenic risk score distribution used to illustrate participant selection
     credit: BRAIN-iPSC · University of Helsinki
+    size: medium
+title: BRAIN-iPSC
+summary: Modelling how polygenic risk for brain disorders affects human stem
+  cell-derived neurons.
+colour: cyan
+status: Active
+topics: []
+people: []
+dois: []
 collaborators:
   - Finnish Biobank Cooperative (FINBB)
   - Helsinki Biobank
@@ -25,6 +26,8 @@ resources:
     url: https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease/brain-ipsc
   - name: FinnGen
     url: https://www.finngen.fi
+order: 0
+draft: false
 ---
 
 ## How does genetic risk affect our cells?

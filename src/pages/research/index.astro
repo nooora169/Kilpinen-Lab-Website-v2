@@ -1,5 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
 import HomeSections from '../../components/HomeSections.astro';
+import TopicSection from '../../components/TopicSection.astro';
+import { getCollection } from 'astro:content';
+const topics = (await getCollection('topics', ({ data }) => !data.draft)).sort((first, second) => first.data.order - second.data.order);
 ---
-<Base title="Research"><HomeSections sections={["science", "projects"]} pageHeading={true}/></Base>
+<Base title="Research">
+  <HomeSections sections={["science"]} pageHeading={true}/>
+  {topics.map(topic => <TopicSection topic={topic}/>)}
+  <HomeSections sections={["projects"]}/>
+</Base>

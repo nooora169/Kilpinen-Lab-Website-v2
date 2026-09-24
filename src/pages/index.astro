@@ -7,15 +7,15 @@ import site from '../data/site.json';
 const headlineParts=site.headline.split(site.headlineHighlight);
 ---
 <Base>
-<section class="hero"><div class="wrap hero-grid"><div class="hero-copy"><p class="eyebrow">{site.kicker}</p><h1>{headlineParts[0]&&<>{headlineParts[0]}<br/></>}<em>{site.headlineHighlight}</em>{headlineParts.slice(1).join(site.headlineHighlight)}</h1><p class="lede">{site.lede}</p><a class="btn solid" href="#research">Explore our research ↗</a></div><figure class="hero-image"><div class="hero-microscopy" role="img" aria-label="Original Kilpinen Lab microscopy photograph displayed once inside a decorative neuron silhouette"></div><figcaption><span>From the lab</span><a href="https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease">Kilpinen Lab microscopy ↗</a></figcaption></figure></div><div class="wrap hero-bottom"><span>GENETIC VARIATION</span><span>CELLULAR PHENOTYPES</span><span>BRAIN DISORDERS</span></div></section>
-<HomeSections sections={['science']}/>
+<section class="hero"><div class="wrap hero-grid"><div class="hero-copy"><p class="eyebrow">{site.kicker}</p><h1>{headlineParts[0]&&<>{headlineParts[0]}<br/></>}<em>{site.headlineHighlight}</em>{headlineParts.slice(1).join(site.headlineHighlight)}</h1><p class="lede">{site.lede}</p><a class="btn solid" href="/research/">Explore our research ↗</a></div><figure class="hero-image"><div class="hero-microscopy" role="img" aria-label="Original Kilpinen Lab microscopy photograph displayed once inside a decorative neuron silhouette"></div><figcaption><span>From the lab</span><a href="https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-disease">Kilpinen Lab microscopy ↗</a></figcaption></figure></div><div class="wrap hero-bottom"><span>GENETIC VARIATION</span><span>CELLULAR PHENOTYPES</span><span>BRAIN DISORDERS</span></div></section>
+<HomeSections sections={['projects']}/>
 <div class="band deep"><section class="wrap" id="news"><div class="sec-head"><h2>News</h2><a class="text-link" href="/news/">All news ↗</a></div><NewsList limit={3}/></section></div>
 <Funders/>
 <section class="home-contact"><div class="wrap"><a class="btn" href="/contact/">Contact the group ↗</a></div></section>
 </Base>
 <script>
 // Keep links to sections of the earlier one-page design usable.
-const destinations:Record<string,string>={'#projects':'/research/#projects','#results':'/publications/#results','#people':'/people/','#publications':'/publications/#publications','#tools':'/resources/','#lablife':'/lab-life/','#contact':'/contact/'};
+const destinations:Record<string,string>={'#research':'/research/#research','#results':'/publications/#results','#people':'/people/','#publications':'/publications/#publications','#tools':'/resources/','#lablife':'/lab-life/','#contact':'/contact/'};
 function followLegacyLink(){const target=destinations[location.hash];if(target)location.replace(target);}
 followLegacyLink();window.addEventListener('hashchange',followLegacyLink);
 </script>

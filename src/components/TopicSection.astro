@@ -1,0 +1,58 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import DetailFields from './DetailFields.astro';
+import ContentMediaLayout from './ContentMediaLayout.astro';
+import DetailMedia from './DetailMedia.astro';
+import PubList from './PubList.astro';
+import publications from '../data/publications.json';
+
+interface Props { topic: CollectionEntry<'topics'>; }
+const { topic } = Astro.props;
+const data = topic.data;
+const { Content } = await render(topic);
+const people = await getCollection('people');
+const members = data.people.map(id => people.find(person => person.id === id)).filter(Boolean);
+const projects = (await getCollection('projects', ({ data }) => !data.draft))
+  .filter(project => project.data.topics.includes(topic.id))
+  .sort((first, second) => first.data.order - second.data.order);
+const wanted = new Set(data.dois.map(doi => doi.toLowerCase()));
+const papers = publications.filter(paper => wanted.has(paper.doi?.toLowerCase()))
+  .sort((first, second) => second.year - first.year);
+const missing = data.dois.filter(doi => !papers.some(paper => paper.doi.toLowerCase() === doi.toLowerCase()));
+---
+<div class="band topic-band">
+  <section class="wrap topic-section" id={topic.id} aria-labelledby={`${topic.id}-title`}>
+    <ContentMediaLayout figures={data.figures}>
+    <header>
+      <p class="eyebrow">{data.status}{data.since && ` · Since ${data.since}`}</p>
+      <h2 id={`${topic.id}-title`}>{data.title}</h2>
+      <p class="topic-hook">{data.hook}</p>
+      <p class="intro">{data.summary}</p>
+    </header>
+    {topic.body?.trim() && <details class="topic-background"><summary>More about this topic</summary><div class="prose"><Content/></div></details>}
+    </ContentMediaLayout>
+    <DetailMedia funders={data.funders} funding={data.funding}/>
+    <DetailFields methods={data.methods} questions={data.questions} collaborators={data.collaborators} resources={data.datasets}/>
+    {members.length > 0 && <div class="topic-related"><h3>People</h3><ul class="topic-links">{members.map(person => person && <li><a href={`/people/#${person.id}`}>{person.data.name}</a></li>)}</ul></div>}
+    {projects.length > 0 && <div class="topic-related"><h3>Related projects</h3><ul>{projects.map(project => <li><a href={`/projects/${project.id}/`}>{project.data.title}</a></li>)}</ul></div>}
+    {(papers.length > 0 || missing.length > 0) && <div class="topic-related"><h3>Related publications</h3><PubList publications={papers}/>{missing.map(doi => <p><a href={`https://doi.org/${doi}`}>{doi} ↗</a></p>)}</div>}
+    <a class="back-to-map" href="#research">↑ Back to research map</a>
+  </section>
+</div>
+<style>
+  .topic-band:nth-of-type(even) { background: var(--bg-alt); }
+  .topic-section { scroll-margin-top: 1.5rem; }
+  .topic-section:target header { border-left: 3px solid var(--accent); padding-left: 1.25rem; }
+  h2 { font-size: var(--s-3); letter-spacing: -.035em; line-height: 1.2; max-width: 36ch; margin: .75rem 0 1.25rem; }
+  .topic-hook { color: var(--accent); font-size: var(--s-1); max-width: 65ch; }
+  .intro { margin-bottom: 1.5rem; }
+  .topic-background { max-width: 70ch; }
+  summary { cursor: pointer; color: var(--accent); padding: .6rem 0; }
+  summary:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
+  .topic-background .prose { padding-top: 1rem; }
+  .topic-related { margin-top: 2rem; }
+  h3 { font-size: var(--s-1); margin-bottom: 1rem; }
+  .topic-links { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; padding: 0; list-style: none; }
+  .topic-related a { color: var(--accent); overflow-wrap: anywhere; }
+  .back-to-map { display: inline-block; margin-top: 2rem; color: var(--muted); font-size: var(--s--1); }
+</style>
