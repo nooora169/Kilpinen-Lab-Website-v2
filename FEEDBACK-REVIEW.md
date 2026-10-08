@@ -1,6 +1,6 @@
 # October website feedback
 
-Updated member-provided bios and supplied portraits, added Aleyna and the honorary Lab Entity, added the lab-bench gallery photo and Kavya's Cell Painting image. Marc's complete biography is retained below a short research summary. His CRIPSR typo is corrected to CRISPR. Emma's existing description now includes her Aalto master's programme and major.
+Updated member-provided bios and supplied portraits, added Aleyna and the honorary Lab Entity, added the lab-bench gallery photo and Kavya's Cell Painting image. Marc's biography is condensed to a short profile matching the other members. His CRIPSR typo is corrected to CRISPR. Emma's existing description now includes her Aalto master's programme and major.
 
 Merged four research topics under Cellular modelling and mechanisms of NDDs. Original source records remain hidden, their detail text and relationships are retained in the source; visible topic sections show only concise descriptions and figures, and old topic paths and hash links forward to it. Homepage research cards use the same published topics as Research. Individual funded projects remain on Research and keep their own pages.
 
