@@ -21,7 +21,7 @@ const initials = d.name
 <article class="person" id={onPeoplePage ? person.id : undefined} style={`--c: var(--${d.colour})`}>
   <div class:list={["av", { "has-photo": Boolean(d.photo) }]}>
     {d.photo ? (
-      <img src={d.photo} alt={d.name} style={`object-fit: ${d.photoFit}`} loading="lazy" width="320" height="320" />
+      <img src={d.photo} alt={d.name} style={`object-fit: ${d.photoFit}; object-position: ${d.photoPosition}; transform: scale(${d.photoZoom})`} loading="lazy" width="320" height="320" />
     ) : (
       <>
         

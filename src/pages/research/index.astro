@@ -7,13 +7,13 @@ const topics = (await getCollection('topics', ({ data }) => !data.draft)).sort((
 ---
 <Base title="Research">
   <HomeSections sections={["science"]} pageHeading={true}/>
-  <div aria-hidden="true">{['epigenetic-modifiers', 'rare-disease-ipsc', 'crispr-models', 'regulation-in-id'].map(id => <span id={id}/>)}</div>
+  <div aria-hidden="true">{['epigenetic-modifiers', 'rare-disease-ipsc', 'crispr-models'].map(id => <span id={id}/>)}</div>
   {topics.map(topic => <TopicSection topic={topic}/>)}
   <HomeSections sections={["projects"]}/>
 </Base>
 
 <script>
-const previousTopics = ['epigenetic-modifiers', 'rare-disease-ipsc', 'crispr-models', 'regulation-in-id'];
+const previousTopics = ['epigenetic-modifiers', 'rare-disease-ipsc', 'crispr-models'];
 function followMergedTopic() {
   if (previousTopics.includes(location.hash.slice(1))) {
     location.replace('#cellular-modelling-ndds');

@@ -4,12 +4,14 @@ summary: Comparing patient-derived and engineered cells to understand the influe
   of genetic background.
 topics:
 - cellular-modelling-ndds
-people: []
+people:
+- nelli-jalkanen
 dois: []
 colour: dapi
 status: Active
 order: 2
 ---
+
 
 
 ## Research overview

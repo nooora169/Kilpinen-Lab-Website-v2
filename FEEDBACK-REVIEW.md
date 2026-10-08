@@ -8,8 +8,10 @@ Portrait layout uses an explicit photo class and positioned images, avoiding rel
 
 Validation: production build passed; desktop (1440px) and mobile (390px) checks passed in Playwright Chromium and WebKit on Home, People, Research and Lab life, including image loading, square portrait frames, overflow, script errors and legacy hash links. WebKit is not a test of every released Safari version or a physical iPhone. Firefox could not launch its profile on this machine; Firefox validation remains pending. The reported original Safari failure was not reproduced or conclusively diagnosed.
 
-Pending content: Aleyna's role; Thara's bio and portrait; Nelli's updated bio and portrait. Existing Helena and Riina descriptions retained. Robin's new bio and photo are included. Existing Nour and alumni records retained.
+Pending content: Aleyna's role; Thara's bio and portrait; Nelli's portrait. Existing Helena and Riina descriptions retained. Robin's new bio and photo are included. Existing Nour and alumni records retained.
 
 GitHub repository: nooora169/Kilpinen-Lab-Website-v2. The remote main commit matched 53e349b when work started. No GitHub deployment/check records were returned for that commit; this does not establish whether Cloudflare is connected. Confirm in the Cloudflare dashboard. For a Git-connected Pages project, use npm run build and dist as output. For an existing Direct Upload project, use GitHub Actions/Wrangler or a new Git-connected Pages project. Hosted Decap login is still disabled and needs OAuth setup before browser-based forms can save to GitHub.
 
 Follow-up review: simplified the four visible research topics to short descriptions and existing figures, removed topic people/publication/project lists and expanded explanations, placed Cell Painting as a 280px side figure, added Emma’s supplied avatar and complete-image framing for Aleyna, and added Reyhane’s WCPG poster news dated 1 October 2026.
+
+Nelli follow-up: restored the intellectual-disability topic as its own bubble with her requested label, heading and summary; updated her bio and added her to the CRISPR topic source and Genetic background project. Emma’s avatar now uses a closer head-and-torso framing. Production build and Chromium/WebKit desktop/mobile checks passed.

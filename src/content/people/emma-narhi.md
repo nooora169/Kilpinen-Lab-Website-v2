@@ -12,6 +12,8 @@ sourceUrl: https://www.helsinki.fi/en/researchgroups/cellular-genetics-of-diseas
 interests:
 - Image analysis
 - Data science
-photoFit: contain
+photoFit: cover
 photo: /uploads/emma-narhi-avatar.jpeg
+photoPosition: 50% 12%
+photoZoom: 1.4
 ---

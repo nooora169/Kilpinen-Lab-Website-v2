@@ -86,6 +86,8 @@ const people = defineCollection({
     // Leave empty and a generated placeholder is drawn instead.
     photo: z.string().optional(),
     photoFit: z.enum(["cover", "contain"]).default("cover"),
+    photoPosition: z.string().default("50% 50%"),
+    photoZoom: z.number().min(1).max(2).default(1),
     colour: z.enum(CHANNELS).default('chalk'),
     // Sort order in the People grid. PI first, then postdocs, and so on.
     order: z.number().default(50),
