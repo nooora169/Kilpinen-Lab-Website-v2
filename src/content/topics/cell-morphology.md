@@ -1,4 +1,11 @@
 ---
+figures:
+  - image: /uploads/npc-cell-painting.png
+    caption: NPC Cell Painting image.
+    alt: Fluorescence microscopy image supplied by Kavya Kalpana Ganesh.
+    credit: Kavya Kalpana Ganesh
+    size: full
+    placement: below
 shortName: Cell morphology
 title: Morphological and functional characterisation of neurons
 hook: What a neuron looks like, measured alongside what it expresses.

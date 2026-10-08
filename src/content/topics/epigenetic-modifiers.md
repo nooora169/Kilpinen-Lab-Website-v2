@@ -2,16 +2,14 @@
 shortName: Epigenetic modifiers
 title: Epigenetic modifiers in neuronal development
 hook: How does losing a chromatin regulator change the course of a developing neuron?
-summary: >-
-  Loss-of-function mutations in genes of the epigenetic machinery are a
-  recurrent cause of neurodevelopmental and psychiatric disorders. We follow
-  patient-derived and CRISPR-engineered lines through neuronal differentiation
-  using single-cell transcriptomics.
+summary: Loss-of-function mutations in genes of the epigenetic machinery are a recurrent
+  cause of neurodevelopmental and psychiatric disorders. We follow patient-derived
+  and CRISPR-engineered lines through neuronal differentiation using single-cell transcriptomics.
 colour: mcherry
 status: Active
 people:
-  - eva-dhaene
-  - marc-carrillo-perez
+- eva-dhaene
+- marc-carrillo-perez
 dois: []
 collaborators: []
 funding: []
@@ -20,7 +18,9 @@ x: 392
 y: 150
 r: 76
 order: 2
+draft: true
 ---
+
 
 ## The question
 

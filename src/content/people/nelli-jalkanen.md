@@ -3,7 +3,7 @@ name: Nelli Jalkanen
 role: Doctoral Researcher
 focus: Investigates gene-expression dysregulation in schizophrenia and
   intellectual disability using neuronal models and high-throughput molecular
-  profiling. Maybe more stuff?
+  profiling.
 colour: cyan
 order: 33
 alumnus: false

@@ -1,7 +1,7 @@
 ---
 name: Thara Rajeev
-role: Research Assitant
-focus: needed
+role: Research Assistant
+focus: ""
 colour: cyan
 order: 50
 alumnus: false

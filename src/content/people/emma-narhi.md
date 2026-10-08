@@ -1,9 +1,7 @@
 ---
 name: Emma Närhi
 role: Research Assistant
-focus: Develops image-analysis methods for neuronal morphology, with a
-  background in bioinformation technology and mathematics at Aalto University,
-  etc....
+focus: "Develops image-analysis methods for neuronal morphology, with a background in bioinformation technology and mathematics at Aalto University. She is a Master's student in Aalto University's Life Science Technologies programme, majoring in Bioinformatics and Digital Health."
 colour: slate
 order: 41
 alumnus: false

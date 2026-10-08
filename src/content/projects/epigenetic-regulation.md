@@ -1,13 +1,16 @@
 ---
-title: "Epigenetic regulation in development"
-summary: "Following neuronal differentiation to study the effects of mutations in chromatin regulators."
-topics: [epigenetic-modifiers]
+title: Epigenetic regulation in development
+summary: Following neuronal differentiation to study the effects of mutations in chromatin
+  regulators.
+topics:
+- cellular-modelling-ndds
 people: []
 dois: []
 colour: mcherry
 status: Active
 order: 3
 ---
+
 
 ## Research overview
 

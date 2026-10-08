@@ -2,20 +2,19 @@
 shortName: Rare disease iPSCs
 title: Molecular variation in rare disease iPSCs
 hook: Do cells from people with rare genetic disease differ measurably from controls?
-summary: >-
-  Analysis of molecular data from stem cell disease models across 210
-  individuals with rare genetic diseases, building on earlier work with the
-  Human Induced Pluripotent Stem Cell Initiative, to establish how far a disease
-  genotype is visible in an undirected cell.
+summary: Analysis of molecular data from stem cell disease models across 210 individuals
+  with rare genetic diseases, building on earlier work with the Human Induced Pluripotent
+  Stem Cell Initiative, to establish how far a disease genotype is visible in an undirected
+  cell.
 colour: farred
 status: Active
 people:
-  - pau-puigdevall
-  - helena-kilpinen
+- pau-puigdevall
+- helena-kilpinen
 dois:
-  - 10.1016/j.xgen.2023.100280
-  - 10.1038/s41588-021-00800-7
-  - 10.7554/eLife.57390
+- 10.1016/j.xgen.2023.100280
+- 10.1038/s41588-021-00800-7
+- 10.7554/eLife.57390
 collaborators: []
 funding: []
 datasets: []
@@ -23,7 +22,9 @@ x: 560
 y: 262
 r: 74
 order: 4
+draft: true
 ---
+
 
 ## The cohort
 

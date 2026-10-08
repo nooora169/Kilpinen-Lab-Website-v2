@@ -1,13 +1,16 @@
 ---
-title: "Genetic background & disease"
-summary: "Comparing patient-derived and engineered cells to understand the influence of genetic background."
-topics: [crispr-models]
+title: Genetic background & disease
+summary: Comparing patient-derived and engineered cells to understand the influence
+  of genetic background.
+topics:
+- cellular-modelling-ndds
 people: []
 dois: []
 colour: dapi
 status: Active
 order: 2
 ---
+
 
 ## Research overview
 
