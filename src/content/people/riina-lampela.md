@@ -1,4 +1,5 @@
 ---
+photo: /uploads/riina-lampela.png
 name: Riina Lampela
 role: Laboratory Coordinator
 focus: "Coordinates daily laboratory activities, stem cell work and technical aspects of projects, drawing on training in genetics, biomedicine and stem-cell biology."

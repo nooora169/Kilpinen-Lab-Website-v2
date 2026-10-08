@@ -23,3 +23,9 @@ Lab-life additions, supplied by the user for this local review:
 - `public/uploads/woodland-selfie.jpg`: unchanged copy of `IMG_2868.jpg`.
 - `public/uploads/woodland-group.jpg`: unchanged copy of `IMG_2857.jpg`.
 Dates and photographer credits have not been supplied. No identities were inferred from these group photographs. Framing is controlled by CSS; the original files are preserved. Astro creates responsive WebP delivery copies at up to 480, 960 and 1440 pixels wide so pages do not download the full-size originals.
+
+## October 2026 feedback assets
+
+Member portraits and the lab-bench and NPC Cell Painting images were supplied by the user in this editing session; original files are copied unchanged under public/uploads. Adithi's existing portrait was retrieved at her request from https://kilpinenlab.org/wp-content/uploads/2024/04/sundaresh-crop.jpeg (linked by https://kilpinenlab.org/team/). The Lab Entity is a hand-drawn SVG, a Groke-inspired fictional honorary member, not a real researcher. No generated portraits or scientific image alterations were used.
+
+Emma’s avatar and Reyhane’s WCPG poster photograph were supplied by the user in the follow-up review. Both are copied unchanged; portrait framing is controlled by CSS.

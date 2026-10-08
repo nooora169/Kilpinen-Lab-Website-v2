@@ -1,13 +1,16 @@
 ---
-title: "Rare disease stem cell models"
-summary: "Investigating molecular variation in iPSCs from individuals with rare genetic diseases."
-topics: [rare-disease-ipsc]
+title: Rare disease stem cell models
+summary: Investigating molecular variation in iPSCs from individuals with rare genetic
+  diseases.
+topics:
+- cellular-modelling-ndds
 people: []
 dois: []
 colour: farred
 status: Active
 order: 1
 ---
+
 
 ## Research overview
 

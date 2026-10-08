@@ -1,19 +1,23 @@
 ---
+figures:
+- image: /uploads/npc-cell-painting.png
+  caption: NPC Cell Painting image.
+  alt: Fluorescence microscopy image supplied by Kavya Kalpana Ganesh.
+  credit: Kavya Kalpana Ganesh
+  size: small
+  placement: right
 shortName: Cell morphology
-title: Morphological and functional characterisation of neurons
+title: Neuronal cell morphology
 hook: What a neuron looks like, measured alongside what it expresses.
-summary: >-
-  Developing methods that characterise iPSC-derived neuronal cells
-  morphologically and functionally, so that imaging phenotypes can be joined to
-  transcriptomic state in the same cells rather than compared across separate
-  experiments.
+summary: We use Cell Painting and high-content imaging to study neuronal shape and
+  structure, and combine these measurements with gene-expression data.
 colour: slate
 status: Active
 people:
-  - kavya-kalpana-ganesh
-  - emma-narhi
+- kavya-kalpana-ganesh
+- emma-narhi
 dois:
-  - 10.7554/eLife.102578
+- 10.7554/eLife.102578
 collaborators: []
 funding: []
 datasets: []
@@ -22,6 +26,7 @@ y: 265
 r: 66
 order: 6
 ---
+
 
 ## Same cell, two measurements
 

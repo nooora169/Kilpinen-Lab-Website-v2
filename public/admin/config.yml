@@ -297,6 +297,27 @@ collections:
     widget: image
     required: false
     hint: At least 1000 px wide. Leave empty to show initials.
+  - name: photoPosition
+    label: Portrait focus
+    widget: string
+    default: 50% 50%
+  - name: photoZoom
+    label: Portrait zoom
+    widget: number
+    value_type: float
+    min: 1
+    max: 2
+    step: 0.1
+    default: 1
+  - name: photoFit
+    label: Portrait framing
+    widget: select
+    options:
+    - label: Fill the frame
+      value: cover
+    - label: Show the complete image
+      value: contain
+    default: cover
   - name: links
     label: Links
     widget: list

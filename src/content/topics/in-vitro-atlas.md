@@ -1,26 +1,24 @@
 ---
 figures:
-  - size: medium
-    placement: right
-    image: /uploads/screenshot-2026-01-23-at-14.19.16.png
-    caption: UMAP- 2.8 million cells
+- size: medium
+  placement: right
+  image: /uploads/screenshot-2026-01-23-at-14.19.16.png
+  caption: UMAP- 2.8 million cells
 methods: []
 shortName: scRNA-seq Atlas
-title: Single-cell atlas of in vitro neurodevelopment
+title: Single-cell brain atlas
 hook: What does a dish of differentiating neurons actually contain, cell by cell?
-summary: We build single-cell transcriptomic atlases of iPSC-derived neuronal
-  differentiation, integrating 2D and 3D models with fetal reference data, so
-  that in vitro systems can be judged against the developing human brain rather
-  than against each other.
+summary: We map the cell types and developmental stages in stem-cell models of the
+  brain, using single-cell data to compare them with human brain development.
 colour: gfp
 status: Active
-since: "2025"
+since: '2025'
 people:
-  - nour-assaf
-  - pau-puigdevall
+- nour-assaf
+- pau-puigdevall
 dois:
-  - 10.7554/eLife.102578
-  - 10.1038/s41467-025-67779-1
+- 10.7554/eLife.102578
+- 10.1038/s41467-025-67779-1
 funding: []
 collaborators: []
 datasets: []
@@ -30,6 +28,7 @@ r: 88
 x: 200
 y: 250
 ---
+
 ## Why this matters
 
 Every group that differentiates stem cells into neurons ends up with a dish of

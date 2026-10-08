@@ -1,17 +1,18 @@
 ---
 shortName: CRISPR models
 title: Genetic background effects in engineered models
-hook: Is a patient's own cell line worth more than the same mutation engineered into a healthy one?
-summary: >-
-  Using CRISPR-Cas9 we compare neuronal cells carrying a mutation in a patient's
-  own genetic background against wild-type and engineered counterparts across
-  different backgrounds, to test how much of a disease phenotype the surrounding
-  genome accounts for.
+hook: Is a patient's own cell line worth more than the same mutation engineered into
+  a healthy one?
+summary: Using CRISPR-Cas9 we compare neuronal cells carrying a mutation in a patient's
+  own genetic background against wild-type and engineered counterparts across different
+  backgrounds, to test how much of a disease phenotype the surrounding genome accounts
+  for.
 colour: dapi
 status: Active
 people:
-  - marc-carrillo-perez
-  - robin-forsen
+- marc-carrillo-perez
+- robin-forsen
+- nelli-jalkanen
 dois: []
 collaborators: []
 funding: []
@@ -20,7 +21,10 @@ x: 400
 y: 340
 r: 72
 order: 3
+draft: true
 ---
+
+
 
 ## A practical question, not only a biological one
 

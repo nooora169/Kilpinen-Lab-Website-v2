@@ -1,4 +1,5 @@
 ---
+photo: /uploads/helena-kilpinen.png
 name: Helena Kilpinen
 role: Principal Investigator
 focus: "Associate professor and group leader at FIMM and the Neuroscience Center. Her background spans autism genetics and functional genomics."

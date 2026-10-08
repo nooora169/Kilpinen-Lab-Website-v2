@@ -2,9 +2,10 @@
 import LegacyRedirect from '../../components/LegacyRedirect.astro';
 import { getCollection } from 'astro:content';
 export async function getStaticPaths() {
-  return (await getCollection('topics', ({ data }) => !data.draft))
+  return (await getCollection('topics', ({ data }) => !data.draft || ['Epigenetic modifiers', 'Rare disease iPSCs', 'CRISPR models', 'Regulation in ID'].includes(data.shortName)))
     .map(topic => ({ params: { slug: topic.id }, props: { topic } }));
 }
 const { topic } = Astro.props;
+const merged = ['epigenetic-modifiers', 'rare-disease-ipsc', 'crispr-models'].includes(topic.id);
 ---
-<LegacyRedirect destination={`/research/#${topic.id}`} title={topic.data.title}/>
+<LegacyRedirect destination={`/research/#${merged ? 'cellular-modelling-ndds' : topic.id}`} title={topic.data.title}/>
