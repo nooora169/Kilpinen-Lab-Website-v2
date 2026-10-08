@@ -1,11 +1,9 @@
 ---
 shortName: NDD mechanisms
-title: Cellular modelling and mechanisms of NDDs
+title: Cellular models of neurodevelopmental disorders
 hook: How do genetic changes affect developing brain cells?
-summary: We use patient-derived iPSCs, CRISPR-engineered models and molecular profiling
-  to investigate neurodevelopmental disorders (NDDs). Our work connects chromatin
-  regulation, genetic background and transcriptional changes with cellular disease
-  mechanisms.
+summary: We use stem cells and gene editing to understand how genetic changes affect
+  brain development and contribute to neurodevelopmental disorders.
 colour: mcherry
 status: Active
 order: 2
@@ -29,6 +27,7 @@ funders: []
 methods: []
 questions: []
 ---
+
 
 ## Epigenetic modifiers in neuronal development
 

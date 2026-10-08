@@ -27,3 +27,5 @@ Dates and photographer credits have not been supplied. No identities were inferr
 ## October 2026 feedback assets
 
 Member portraits and the lab-bench and NPC Cell Painting images were supplied by the user in this editing session; original files are copied unchanged under public/uploads. Adithi's existing portrait was retrieved at her request from https://kilpinenlab.org/wp-content/uploads/2024/04/sundaresh-crop.jpeg (linked by https://kilpinenlab.org/team/). The Lab Entity is a hand-drawn SVG, a Groke-inspired fictional honorary member, not a real researcher. No generated portraits or scientific image alterations were used.
+
+Emma’s avatar and Reyhane’s WCPG poster photograph were supplied by the user in the follow-up review. Both are copied unchanged; portrait framing is controlled by CSS.

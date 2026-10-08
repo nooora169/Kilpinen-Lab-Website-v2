@@ -297,6 +297,15 @@ collections:
     widget: image
     required: false
     hint: At least 1000 px wide. Leave empty to show initials.
+  - name: photoFit
+    label: Portrait framing
+    widget: select
+    options:
+    - label: Fill the frame
+      value: cover
+    - label: Show the complete image
+      value: contain
+    default: cover
   - name: links
     label: Links
     widget: list
